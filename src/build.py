@@ -123,6 +123,7 @@ def page(slug, title, description, body, *, schema=(), kind="article", current="
 <title>{e(title)}</title>
 <meta name="description" content="{e(description)}">
 <meta name="robots" content="{robots}">
+<meta name="msvalidate.01" content="9BEF4B135A9025BA46678C081A6365D9">
 <link rel="canonical" href="{url}">{alternate}{hreflang}
 <meta name="theme-color" content="#f7f6f0">
 <meta name="apple-itunes-app" content="app-id={APP_ID}">
