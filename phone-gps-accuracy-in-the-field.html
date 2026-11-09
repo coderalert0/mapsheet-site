@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Accurate Is Phone GPS in the Field and Under Trees?</title>
+<meta name="description" content="Phone GPS accuracy in open sky and under forest canopy, from GPS.gov and peer-reviewed field tests, and how waiting, averaging and external receivers help.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="msvalidate.01" content="9BEF4B135A9025BA46678C081A6365D9">
+<link rel="canonical" href="https://coderalert0.github.io/mapsheet-site/phone-gps-accuracy-in-the-field.html">
+<link rel="alternate" type="text/markdown" href="phone-gps-accuracy-in-the-field.md">
+<meta name="theme-color" content="#f7f6f0">
+<meta name="apple-itunes-app" content="app-id=6832417568">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mapsheet">
+<meta property="og:title" content="How Accurate Is Phone GPS in the Field and Under Trees?">
+<meta property="og:description" content="Phone GPS accuracy in open sky and under forest canopy, from GPS.gov and peer-reviewed field tests, and how waiting, averaging and external receivers help.">
+<meta property="og:url" content="https://coderalert0.github.io/mapsheet-site/phone-gps-accuracy-in-the-field.html">
+<meta property="og:image" content="https://coderalert0.github.io/mapsheet-site/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mapsheet showing a GPS position on a topographic map, with points, a track and an area">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "How accurate is phone GPS in the field?", "description": "Phone GPS accuracy in open sky and under forest canopy, from GPS.gov and peer-reviewed field tests, and how waiting, averaging and external receivers help.", "datePublished": "2026-11-08", "dateModified": "2026-11-08", "mainEntityOfPage": "https://coderalert0.github.io/mapsheet-site/phone-gps-accuracy-in-the-field.html", "image": "https://coderalert0.github.io/mapsheet-site/img/og.png", "author": {"@type": "Organization", "name": "Mapsheet", "url": "https://coderalert0.github.io/mapsheet-site/", "logo": "https://coderalert0.github.io/mapsheet-site/img/icon-512.png"}, "publisher": {"@type": "Organization", "name": "Mapsheet", "url": "https://coderalert0.github.io/mapsheet-site/", "logo": "https://coderalert0.github.io/mapsheet-site/img/icon-512.png"}, "inLanguage": "en-US", "citation": ["https://www.gps.gov/gps-accuracy", "https://pmc.ncbi.nlm.nih.gov/articles/PMC8838512/", "https://pmc.ncbi.nlm.nih.gov/articles/PMC10016660/", "https://pmc.ncbi.nlm.nih.gov/articles/PMC10056071/", "https://www.ion.org/publications/abstract.cfm?articleID=13079", "https://developer.apple.com/documentation/corelocation/cllocation/horizontalaccuracy", "https://developer.apple.com/documentation/corelocation/cllocationmanager/startupdatinglocation%28%29", "https://developer.android.com/reference/android/location/Location"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://coderalert0.github.io/mapsheet-site/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://coderalert0.github.io/mapsheet-site/#guides"}, {"@type": "ListItem", "position": 3, "name": "Phone GPS accuracy", "item": "https://coderalert0.github.io/mapsheet-site/phone-gps-accuracy-in-the-field.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does my phone show ±3 m when I'm clearly farther off?", "acceptedAnswer": {"@type": "Answer", "text": "The figure is an estimate, not a measurement. On Android it is defined to contain the true position only 68% of the time, and under trees GPS.gov lists both signal blockage and reflected signals as sources of error."}}, {"@type": "Question", "name": "How long should I average a point under trees?", "acceptedAnswer": {"@type": "Answer", "text": "None of the studies above found a waiting time that makes a phone sub-meter under canopy. Lee's 30-second averages gave about 4 m RMSE with an iPhone, and the same paper cites earlier work in which 10 minutes of observation under canopy, even with post-processing, did not reach sub-meter accuracy."}}, {"@type": "Question", "name": "Will an external GNSS receiver get me sub-meter accuracy under canopy?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the receiver and on corrections. The centimeter-level results above came from a dual-frequency receiver post-processed against a reference station, and GPS.gov credits \"dual-frequency receivers and/or augmentation systems\" for real-time centimeter work. The mapping-grade Trimble Juno T41 in Lee's test averaged 3.45 m RMSE."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="./"><img src="icon.png" alt="" width="34" height="34"><span>Mapsheet</span></a>
+    <nav class="nav" aria-label="Site">
+      <a href="./#how">Features</a>
+      <a href="./#guides" aria-current="page">Guides</a>
+      <a href="./#support">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://coderalert0.github.io/mapsheet-site/fr/" hreflang="fr-CA" lang="fr-CA">Français</a>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/id6832417568">Get the app</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="guide">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="./">Home</a> <span aria-hidden="true">/</span> <a href="./#guides">Guides</a> <span aria-hidden="true">/</span> <span>Phone GPS accuracy</span></nav>
+<article>
+<h1>How accurate is phone GPS in the field?</h1>
+<p class="updated">Checked against its sources on <time datetime="2026-11-08">November 8, 2026</time></p>
+<div class="answer"><h2>Short answer</h2><p>Under open sky, GPS.gov says smartphones are typically accurate to within a 4.9 m (16 ft) radius. Under forest canopy, peer-reviewed tests have measured root-mean-square errors of about 4 to 15 m depending on the phone and the canopy, and in one leaf-off forest test no handheld device reached sub-meter accuracy. Waiting for the fix to settle, averaging and an external GNSS receiver with corrections all help.</p></div>
+<nav class="toc" aria-label="On this page"><p class="foot-title">On this page</p><ul><li><a href="#open-sky-about-5-meters">Open sky: about 5 meters</a></li><li><a href="#under-forest-canopy-worse-and-it-varies-by-phone">Under forest canopy: worse, and it varies by phone</a></li><li><a href="#what-helps">What helps</a></li><li><a href="#reading-the-accuracy-number">Reading the accuracy number</a></li><li><a href="#how-mapsheet-does-it">How Mapsheet does it</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul></nav>
+<h2 id="open-sky-about-5-meters">Open sky: about 5 meters</h2>
+<p>GPS.gov states that "GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) radius under open sky." The figure is the mean measured by a smartphone lab with over a thousand participants in a hundred countries (van Diggelen and Enge, ION GNSS+ 2015).</p>
+<p>The US government commits to a daily global average user range error of 2.0 m or better, with 95% probability. GPS.gov notes that this figure describes the signal in space, not the accuracy of a user's receiver. On the ground, accuracy is degraded by signal blockage from "buildings, bridges, trees, etc.", indoor use, reflected signals (multipath), satellite geometry, atmospheric conditions and receiver quality.</p>
+<h2 id="under-forest-canopy-worse-and-it-varies-by-phone">Under forest canopy: worse, and it varies by phone</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Study</th>
+<th>Devices</th>
+<th>Conditions</th>
+<th>Horizontal error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purfürst 2022, <em>Sensors</em></td>
+<td>10 Android phones and a Trimble Geo 7X</td>
+<td>15 forest sites in Germany; about 10-minute static sessions; error of every 1-second fix</td>
+<td>Phones: DRMS 4.56 m (best) to 14.59 m (worst). Multi-frequency phones 6.99 m, single-frequency 9.13 m. Corrected Trimble reference 3.26 m</td>
+</tr>
+<tr>
+<td>Lee et al. 2023, <em>PLOS ONE</em></td>
+<td>iPhone 12 Pro, Garmin Oregon 700, Trimble Juno T41</td>
+<td>Leaf-off deciduous forest in Georgia, USA; 26 points visited 20 times; each position an average of 10 fixes over about 30 seconds</td>
+<td>Average RMSE: iPhone 3.91 m, Garmin 8.11 m, Trimble 3.45 m</td>
+</tr>
+</tbody>
+</table></div>
+<p>Purfürst found "a strong significant correlation between canopy density and positional accuracy" and big differences even between identical phones. Lee and colleagues concluded that "sub-meter positional accuracy was not attainable by any of the devices employed in forested conditions." Purfürst also cites studies in which open-area accuracy was two to six times better than under forest.</p>
+<h2 id="what-helps">What helps</h2>
+<ul>
+<li><strong>Wait for the fix to settle.</strong> Apple's documentation says the first fix "may take several seconds", and that iOS may send another update "if the hardware gathers a more accurate location reading." Watch the accuracy number drop before you mark a point.</li>
+<li><strong>Average.</strong> Purfürst cites studies in which longer averaging "can usually improve it significantly", while noting that even 2 minutes of waiting is too long in everyday work.</li>
+<li><strong>Use an external receiver with corrections.</strong> GPS.gov says dual-frequency receivers and/or augmentation systems "can enable real-time positioning within a few centimeters." In Tomaštík and Everett's 2023 <em>Sensors</em> study, a low-cost dual-frequency receiver (u-blox F9P), recording 20 minutes and post-processed against a reference station 2.4 km away, had median errors under 5 cm beneath canopy. A Pixel 5 phone's raw data, processed the same way, came out at about 1.5 m.</li>
+</ul>
+<h2 id="reading-the-accuracy-number">Reading the accuracy number</h2>
+<p>On iPhone and iPad, the number is Core Location's <code>horizontalAccuracy</code>: "The radius of uncertainty for the location, measured in meters." The reported latitude and longitude are the center of that circle, and a negative value means the position is invalid. Apple's documentation does not state a confidence level.</p>
+<p>Android defines its number as a radius with a 68% chance that the true location is inside it, so roughly one fix in three falls outside the circle. On either platform, the number is the device's own estimate, not a check against a surveyed point.</p>
+<h2 id="how-mapsheet-does-it">How Mapsheet does it</h2>
+<p>Mapsheet shows your GPS position on your own <a href="what-is-a-geospatial-pdf.html">geospatial PDFs</a> and GeoTIFFs offline, and Bluetooth GNSS receivers that provide location to iOS work with it. On the Crew plan, GPS averaging averages fixes over 30 seconds and shows the standard error, which reflects how tightly the fixes agreed, not how close the average is to the true point.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<h3 id="why-does-my-phone-show-3-m-when-im-clearly-farther-off">Why does my phone show ±3 m when I'm clearly farther off?</h3>
+<p>The figure is an estimate, not a measurement. On Android it is defined to contain the true position only 68% of the time, and under trees GPS.gov lists both signal blockage and reflected signals as sources of error.</p>
+<h3 id="how-long-should-i-average-a-point-under-trees">How long should I average a point under trees?</h3>
+<p>None of the studies above found a waiting time that makes a phone sub-meter under canopy. Lee's 30-second averages gave about 4 m RMSE with an iPhone, and the same paper cites earlier work in which 10 minutes of observation under canopy, even with post-processing, did not reach sub-meter accuracy.</p>
+<h3 id="will-an-external-gnss-receiver-get-me-sub-meter-accuracy-under-canopy">Will an external GNSS receiver get me sub-meter accuracy under canopy?</h3>
+<p>It depends on the receiver and on corrections. The centimeter-level results above came from a dual-frequency receiver post-processed against a reference station, and GPS.gov credits "dual-frequency receivers and/or augmentation systems" for real-time centimeter work. The mapping-grade Trimble Juno T41 in Lee's test averaged 3.45 m RMSE.</p>
+<aside class="app-cta">
+  <div><h2>Your maps, with you on them</h2><p>Mapsheet shows your position on geospatial PDFs and GeoTIFFs with no signal: points, tracks, areas, UTM and MGRS. Free for 3 maps, on iPhone and iPad.</p></div>
+  <a class="badge" href="https://apps.apple.com/us/app/id6832417568"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="150" height="50"></a>
+</aside>
+<section class="sources"><h2>Sources</h2><ul><li><a href="https://www.gps.gov/gps-accuracy" rel="noopener">GPS.gov: GPS Accuracy</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8838512/" rel="noopener">Purfürst T. (2022). Evaluation of Static Autonomous GNSS Positioning Accuracy Using Single-, Dual-, and Tri-Frequency Smartphones in Forest Canopy Environments. Sensors 22(3):1289</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10016660/" rel="noopener">Lee T., Bettinger P., Merry K., Cieszewski C. (2023). The effects of nearby trees on the positional accuracy of GNSS receivers in a forest environment. PLOS ONE 18(3):e0283090</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10056071/" rel="noopener">Tomaštík J., Everett T. (2023). Static Positioning under Tree Canopy Using Low-Cost GNSS Receivers and Adapted RTKLIB Software. Sensors 23(6):3136</a></li><li><a href="https://www.ion.org/publications/abstract.cfm?articleID=13079" rel="noopener">van Diggelen F., Enge P. (2015). The World&#x27;s first GPS MOOC and Worldwide Laboratory using Smartphones. ION GNSS+ 2015</a></li><li><a href="https://developer.apple.com/documentation/corelocation/cllocation/horizontalaccuracy" rel="noopener">Apple Developer: CLLocation horizontalAccuracy</a></li><li><a href="https://developer.apple.com/documentation/corelocation/cllocationmanager/startupdatinglocation%28%29" rel="noopener">Apple Developer: CLLocationManager startUpdatingLocation()</a></li><li><a href="https://developer.android.com/reference/android/location/Location" rel="noopener">Android Developers: Location (getAccuracy)</a></li></ul><p class="muted">Guides summarize public sources. Check a map and a position against the ground before you rely on them.</p></section>
+<section class="related"><h2>Related guides</h2><ul><li><a href="what-is-a-geospatial-pdf.html">What is a geospatial PDF?</a></li><li><a href="free-topo-maps-as-geospatial-pdf.html">Where can I download free topo maps as geospatial PDFs?</a></li><li><a href="utm-and-mgrs-coordinates-explained.html">How do UTM and MGRS coordinates work?</a></li></ul></section>
+</article>
+</div>
+</main>
+<footer>
+  <div class="in">
+    <div class="foot-about">
+      <a class="brand" href="./"><img src="icon.png" alt="" width="28" height="28"><span>Mapsheet</span></a>
+      <p>Your own maps, offline, with you on them. iPhone and iPad.</p>
+      <p>© 2026 Mapsheet. Mapsheet shows positions from your device's GPS. Check what a map shows against the ground, and don't rely on any one device for safety. Mapsheet is not affiliated with TerraGo, Esri, the USGS or NRCan; GeoPDF is a registered trademark of TerraGo Technologies.</p>
+    </div>
+    <nav aria-label="Guides"><p class="foot-title">Guides</p><a href="what-is-a-geospatial-pdf.html">Geospatial PDFs</a><a href="free-topo-maps-as-geospatial-pdf.html">Free topo maps</a><a href="utm-and-mgrs-coordinates-explained.html">UTM and MGRS</a><a href="phone-gps-accuracy-in-the-field.html">Phone GPS accuracy</a></nav>
+    <nav aria-label="App"><p class="foot-title">App</p><a href="https://apps.apple.com/us/app/id6832417568">App Store</a><a href="./#support">Support</a><a href="privacy.html">Privacy Policy</a><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a><a href="llms.txt">llms.txt</a></nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Is a Geospatial PDF? How Map PDFs Store Coordinates</title>
+<meta name="description" content="A geospatial PDF is a map PDF that stores its own coordinates. Learn the two encodings, how to check a file, and how ArcGIS Pro, QGIS and the USGS make them.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="msvalidate.01" content="9BEF4B135A9025BA46678C081A6365D9">
+<link rel="canonical" href="https://coderalert0.github.io/mapsheet-site/what-is-a-geospatial-pdf.html">
+<link rel="alternate" type="text/markdown" href="what-is-a-geospatial-pdf.md">
+<meta name="theme-color" content="#f7f6f0">
+<meta name="apple-itunes-app" content="app-id=6832417568">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mapsheet">
+<meta property="og:title" content="What Is a Geospatial PDF? How Map PDFs Store Coordinates">
+<meta property="og:description" content="A geospatial PDF is a map PDF that stores its own coordinates. Learn the two encodings, how to check a file, and how ArcGIS Pro, QGIS and the USGS make them.">
+<meta property="og:url" content="https://coderalert0.github.io/mapsheet-site/what-is-a-geospatial-pdf.html">
+<meta property="og:image" content="https://coderalert0.github.io/mapsheet-site/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mapsheet showing a GPS position on a topographic map, with points, a track and an area">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "What is a geospatial PDF?", "description": "A geospatial PDF is a map PDF that stores its own coordinates. Learn the two encodings, how to check a file, and how ArcGIS Pro, QGIS and the USGS make them.", "datePublished": "2026-11-08", "dateModified": "2026-11-08", "mainEntityOfPage": "https://coderalert0.github.io/mapsheet-site/what-is-a-geospatial-pdf.html", "image": "https://coderalert0.github.io/mapsheet-site/img/og.png", "author": {"@type": "Organization", "name": "Mapsheet", "url": "https://coderalert0.github.io/mapsheet-site/", "logo": "https://coderalert0.github.io/mapsheet-site/img/icon-512.png"}, "publisher": {"@type": "Organization", "name": "Mapsheet", "url": "https://coderalert0.github.io/mapsheet-site/", "logo": "https://coderalert0.github.io/mapsheet-site/img/icon-512.png"}, "inLanguage": "en-US", "citation": ["https://docs.ogc.org/bp/08-139r3/08-139r3.pdf", "https://loc.gov/preservation/digital/formats/fdd/fdd000315.shtml", "https://www.loc.gov/preservation/digital/formats/fdd/fdd000522.shtml", "https://loc.gov/preservation/digital/formats/fdd/fdd000312.shtml", "https://doc.esri.com/en/arcgis-pro/latest/help/sharing/overview/pdf-export.html", "https://docs.qgis.org/latest/en/docs/user_manual/print_layout/create_output.html", "https://docs.qgis.org/latest/en/docs/user_manual/managing_data_source/georeferencer.html", "https://www.usgs.gov/programs/national-geospatial-program/us-topo-maps-america", "https://www.usgs.gov/faqs/why-are-usgs-historical-topographic-maps-referenced-outdated-datums", "https://gdal.org/en/stable/drivers/raster/pdf.html", "https://gdal.org/en/stable/programs/gdalinfo.html", "https://api.itextpdf.com/iText5/java/5.5.13.1/com/itextpdf/text/pdf/spatial/MeasureGeospatial.html"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://coderalert0.github.io/mapsheet-site/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://coderalert0.github.io/mapsheet-site/#guides"}, {"@type": "ListItem", "position": 3, "name": "Geospatial PDFs", "item": "https://coderalert0.github.io/mapsheet-site/what-is-a-geospatial-pdf.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is a geospatial PDF the same as a georeferenced PDF?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, both describe a PDF that carries its own coordinates. You will also see GeoPDF® (TerraGo's trademark for its geospatial PDFs); the OGC document notes that following its encoding gives no right to use that trademark."}}, {"@type": "Question", "name": "Which encoding should new maps use?", "acceptedAnswer": {"@type": "Answer", "text": "ISO 32000. It is part of PDF 2.0, the USGS moved US Topo to it in 2017, and GDAL now writes nothing else. Map readers still need the OGC encoding for older files, including the USGS historical scans."}}, {"@type": "Question", "name": "Can I add coordinates to a scanned map?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, with a GIS. The QGIS Georeferencer aligns \"unreferenced raster or vector layers to known coordinate systems using Ground Control Points\" and can save the result as a GeoTIFF."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="./"><img src="icon.png" alt="" width="34" height="34"><span>Mapsheet</span></a>
+    <nav class="nav" aria-label="Site">
+      <a href="./#how">Features</a>
+      <a href="./#guides" aria-current="page">Guides</a>
+      <a href="./#support">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://coderalert0.github.io/mapsheet-site/fr/" hreflang="fr-CA" lang="fr-CA">Français</a>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/id6832417568">Get the app</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="guide">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="./">Home</a> <span aria-hidden="true">/</span> <a href="./#guides">Guides</a> <span aria-hidden="true">/</span> <span>Geospatial PDFs</span></nav>
+<article>
+<h1>What is a geospatial PDF?</h1>
+<p class="updated">Checked against its sources on <time datetime="2026-11-08">November 8, 2026</time></p>
+<div class="answer"><h2>Short answer</h2><p>A geospatial (georeferenced) PDF is an ordinary PDF map that also stores the information needed to convert any point on the page into real-world coordinates. The coordinates are written inside the file, using either the ISO 32000 geospatial measure dictionary or the older OGC best-practice encoding (LGIDict), so a GPS app can place your position on the map without a network connection.</p></div>
+<nav class="toc" aria-label="On this page"><p class="foot-title">On this page</p><ul><li><a href="#what-makes-a-pdf-geospatial">What makes a PDF geospatial</a></li><li><a href="#the-two-ways-coordinates-are-stored">The two ways coordinates are stored</a></li><li><a href="#how-arcgis-pro-qgis-and-the-usgs-make-them">How ArcGIS Pro, QGIS and the USGS make them</a></li><li><a href="#how-to-tell-whether-a-pdf-has-coordinates">How to tell whether a PDF has coordinates</a></li><li><a href="#how-mapsheet-does-it">How Mapsheet does it</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul></nav>
+<h2 id="what-makes-a-pdf-geospatial">What makes a PDF geospatial</h2>
+<p>A normal PDF only knows page positions. A geospatial PDF adds a few objects that tie those positions to a coordinate reference system: the datum, the projection, and how page points line up with map coordinates. The OGC document says this "allows association of an arbitrary coordinate reference system to a PDF illustration", so software can convert in both directions.</p>
+<p>A map that shows UTM ticks or a graticule in its margin is not geospatial unless those objects are present. The printed grid is only ink.</p>
+<h2 id="the-two-ways-coordinates-are-stored">The two ways coordinates are stored</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>ISO 32000 encoding</th>
+<th>OGC best practice (LGIDict)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Origin</td>
+<td>Adobe, Acrobat 9 (June 2008), as Extension Level 3 to PDF 1.7</td>
+<td>Layton Graphics Inc. in the early 2000s; maintained by TerraGo Technologies from 2005</td>
+</tr>
+<tr>
+<td>Where it lives</td>
+<td>A measure dictionary with subtype GEO, attached to a viewport (a region of the page) or to an image or form object</td>
+<td>An <code>LGIDict</code> entry on the page object: one map frame or an array of map frames</td>
+</tr>
+<tr>
+<td>How points are tied</td>
+<td>Latitude/longitude control points (<code>GPTS</code>) matched to positions inside the viewport (<code>LPTS</code>)</td>
+<td>A <code>Registration</code> array of point pairs (PDF x, PDF y, map x, map y), or a transformation matrix (<code>CTM</code>)</td>
+</tr>
+<tr>
+<td>Coordinate system</td>
+<td>An EPSG code or WKT</td>
+<td>A <code>Projection</code> dictionary using the document's own datum and projection codes</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Part of ISO 32000-2 (PDF 2.0), published 2017</td>
+<td>OGC 08-139r3, dated 17 January 2011, an OGC Best Practice, "not an OGC Standard"</td>
+</tr>
+</tbody>
+</table></div>
+<p>The OGC encoding marks the map's boundary with a <code>Neatline</code>, required when a page holds several map frames, such as an inset. The OGC document also admits that its datum, ellipsoid and coordinate system codes "do not conform to the EPSG database".</p>
+<p>GDAL, the open-source geospatial library, reads both encodings, labels the OGC one "not recommended", and since version 3.11 writes only ISO 32000.</p>
+<h2 id="how-arcgis-pro-qgis-and-the-usgs-make-them">How ArcGIS Pro, QGIS and the USGS make them</h2>
+<ul>
+<li><strong>ArcGIS Pro.</strong> In the Export pane, <strong>Export georeference information</strong> will "include geospatial information from the map frames", so supported PDF readers can extract x,y coordinates. <strong>Layers and attributes</strong> adds PDF layers and, optionally, feature attributes.</li>
+<li><strong>QGIS.</strong> Exporting a print layout to PDF or TIFF creates georeferenced output by default; <strong>Append georeference information</strong> works only if the reference map is on the first page. <strong>Create Geospatial PDF</strong> adds map themes and vector feature information.</li>
+<li><strong>USGS.</strong> US Topo maps are built from The National Map's GIS data and published as layered geospatial PDFs. The Library of Congress records that US Topos moved to the ISO 32000 encoding in 2017, while the Historical Topographic Map Collection still uses the OGC encoding (<a href="free-topo-maps-as-geospatial-pdf.html">where to download them</a>).</li>
+</ul>
+<h2 id="how-to-tell-whether-a-pdf-has-coordinates">How to tell whether a PDF has coordinates</h2>
+<ol>
+<li><strong>Run <code>gdalinfo</code> on it.</strong> GDAL reads geospatial PDFs "by extracting georeferencing information". <code>gdalinfo</code> prints the file's coordinate system in WKT and its corner coordinates. If no coordinate system appears, there is nothing for a GPS app to use.</li>
+<li><strong>Check the datum it reports.</strong> GDAL treats unrecognized OGC-encoding datums as WGS 84-based, so a file can open and still sit in the wrong place; datums can differ by hundreds of meters (<a href="utm-and-mgrs-coordinates-explained.html">datums explained</a>).</li>
+<li><strong>Check how it was made.</strong> A PDF exported with the georeference option off, or a scan, has no coordinates at all.</li>
+</ol>
+<h2 id="how-mapsheet-does-it">How Mapsheet does it</h2>
+<p>Mapsheet opens your own geospatial PDFs and GeoTIFFs on iPhone and iPad and shows your GPS position on them with no connection. You can drop points, record tracks and measure lines and areas on the map, then export GPX, KML, KMZ or CSV. The Free plan holds 3 maps at a time.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<h3 id="is-a-geospatial-pdf-the-same-as-a-georeferenced-pdf">Is a geospatial PDF the same as a georeferenced PDF?</h3>
+<p>Yes, both describe a PDF that carries its own coordinates. You will also see GeoPDF® (TerraGo's trademark for its geospatial PDFs); the OGC document notes that following its encoding gives no right to use that trademark.</p>
+<h3 id="which-encoding-should-new-maps-use">Which encoding should new maps use?</h3>
+<p>ISO 32000. It is part of PDF 2.0, the USGS moved US Topo to it in 2017, and GDAL now writes nothing else. Map readers still need the OGC encoding for older files, including the USGS historical scans.</p>
+<h3 id="can-i-add-coordinates-to-a-scanned-map">Can I add coordinates to a scanned map?</h3>
+<p>Yes, with a GIS. The QGIS Georeferencer aligns "unreferenced raster or vector layers to known coordinate systems using Ground Control Points" and can save the result as a GeoTIFF.</p>
+<aside class="app-cta">
+  <div><h2>Your maps, with you on them</h2><p>Mapsheet shows your position on geospatial PDFs and GeoTIFFs with no signal: points, tracks, areas, UTM and MGRS. Free for 3 maps, on iPhone and iPad.</p></div>
+  <a class="badge" href="https://apps.apple.com/us/app/id6832417568"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="150" height="50"></a>
+</aside>
+<section class="sources"><h2>Sources</h2><ul><li><a href="https://docs.ogc.org/bp/08-139r3/08-139r3.pdf" rel="noopener">OGC 08-139r3: PDF Georegistration Encoding Best Practice Version 2.2</a></li><li><a href="https://loc.gov/preservation/digital/formats/fdd/fdd000315.shtml" rel="noopener">Library of Congress, Sustainability of Digital Formats: PDF 1.7 ExtensionLevel 3, Geospatial Encoding (Adobe), fdd000315</a></li><li><a href="https://www.loc.gov/preservation/digital/formats/fdd/fdd000522.shtml" rel="noopener">Library of Congress, Sustainability of Digital Formats: TerraGo file format, fdd000522</a></li><li><a href="https://loc.gov/preservation/digital/formats/fdd/fdd000312.shtml" rel="noopener">Library of Congress, Sustainability of Digital Formats: OGC Best Practice 08-139 encoding, fdd000312</a></li><li><a href="https://doc.esri.com/en/arcgis-pro/latest/help/sharing/overview/pdf-export.html" rel="noopener">Esri: Export to PDF, ArcGIS Pro documentation</a></li><li><a href="https://docs.qgis.org/latest/en/docs/user_manual/print_layout/create_output.html" rel="noopener">QGIS Documentation: Creating an Output (print layouts)</a></li><li><a href="https://docs.qgis.org/latest/en/docs/user_manual/managing_data_source/georeferencer.html" rel="noopener">QGIS Documentation: Georeferencer</a></li><li><a href="https://www.usgs.gov/programs/national-geospatial-program/us-topo-maps-america" rel="noopener">USGS: US Topo, Maps for America</a></li><li><a href="https://www.usgs.gov/faqs/why-are-usgs-historical-topographic-maps-referenced-outdated-datums" rel="noopener">USGS FAQ: Why are USGS historical topographic maps referenced to outdated datums?</a></li><li><a href="https://gdal.org/en/stable/drivers/raster/pdf.html" rel="noopener">GDAL: PDF, Geospatial PDF raster driver</a></li><li><a href="https://gdal.org/en/stable/programs/gdalinfo.html" rel="noopener">GDAL: gdalinfo</a></li><li><a href="https://api.itextpdf.com/iText5/java/5.5.13.1/com/itextpdf/text/pdf/spatial/MeasureGeospatial.html" rel="noopener">iText 5 API: MeasureGeospatial (ISO 32000 geospatial measure dictionary entries)</a></li></ul><p class="muted">Guides summarize public sources. Check a map and a position against the ground before you rely on them.</p></section>
+<section class="related"><h2>Related guides</h2><ul><li><a href="free-topo-maps-as-geospatial-pdf.html">Where can I download free topo maps as geospatial PDFs?</a></li><li><a href="utm-and-mgrs-coordinates-explained.html">How do UTM and MGRS coordinates work?</a></li><li><a href="phone-gps-accuracy-in-the-field.html">How accurate is phone GPS in the field?</a></li></ul></section>
+</article>
+</div>
+</main>
+<footer>
+  <div class="in">
+    <div class="foot-about">
+      <a class="brand" href="./"><img src="icon.png" alt="" width="28" height="28"><span>Mapsheet</span></a>
+      <p>Your own maps, offline, with you on them. iPhone and iPad.</p>
+      <p>© 2026 Mapsheet. Mapsheet shows positions from your device's GPS. Check what a map shows against the ground, and don't rely on any one device for safety. Mapsheet is not affiliated with TerraGo, Esri, the USGS or NRCan; GeoPDF is a registered trademark of TerraGo Technologies.</p>
+    </div>
+    <nav aria-label="Guides"><p class="foot-title">Guides</p><a href="what-is-a-geospatial-pdf.html">Geospatial PDFs</a><a href="free-topo-maps-as-geospatial-pdf.html">Free topo maps</a><a href="utm-and-mgrs-coordinates-explained.html">UTM and MGRS</a><a href="phone-gps-accuracy-in-the-field.html">Phone GPS accuracy</a></nav>
+    <nav aria-label="App"><p class="foot-title">App</p><a href="https://apps.apple.com/us/app/id6832417568">App Store</a><a href="./#support">Support</a><a href="privacy.html">Privacy Policy</a><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a><a href="llms.txt">llms.txt</a></nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

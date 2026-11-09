@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UTM and MGRS Coordinates Explained for Field Crews</title>
+<meta name="description" content="How UTM zones, eastings and northings, MGRS and US National Grid references and map datums work, with worked examples from USGS and FGDC sources.">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="msvalidate.01" content="9BEF4B135A9025BA46678C081A6365D9">
+<link rel="canonical" href="https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.html">
+<link rel="alternate" type="text/markdown" href="utm-and-mgrs-coordinates-explained.md">
+<meta name="theme-color" content="#f7f6f0">
+<meta name="apple-itunes-app" content="app-id=6832417568">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mapsheet">
+<meta property="og:title" content="UTM and MGRS Coordinates Explained for Field Crews">
+<meta property="og:description" content="How UTM zones, eastings and northings, MGRS and US National Grid references and map datums work, with worked examples from USGS and FGDC sources.">
+<meta property="og:url" content="https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.html">
+<meta property="og:image" content="https://coderalert0.github.io/mapsheet-site/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mapsheet showing a GPS position on a topographic map, with points, a track and an area">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "How do UTM and MGRS coordinates work?", "description": "How UTM zones, eastings and northings, MGRS and US National Grid references and map datums work, with worked examples from USGS and FGDC sources.", "datePublished": "2026-11-08", "dateModified": "2026-11-08", "mainEntityOfPage": "https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.html", "image": "https://coderalert0.github.io/mapsheet-site/img/og.png", "author": {"@type": "Organization", "name": "Mapsheet", "url": "https://coderalert0.github.io/mapsheet-site/", "logo": "https://coderalert0.github.io/mapsheet-site/img/icon-512.png"}, "publisher": {"@type": "Organization", "name": "Mapsheet", "url": "https://coderalert0.github.io/mapsheet-site/", "logo": "https://coderalert0.github.io/mapsheet-site/img/icon-512.png"}, "inLanguage": "en-US", "citation": ["https://pubs.usgs.gov/fs/2001/0077/report.pdf", "https://www.fgdc.gov/standards/projects/FGDC-standards-projects/usng/fgdc_std_011_2001_usng.pdf", "https://www.usgs.gov/faqs/how-large-north-american-datum-1927-nad-27-nad-83-shift", "https://www.usgs.gov/faqs/why-are-usgs-historical-topographic-maps-referenced-outdated-datums", "https://www.gps.gov/gps-accuracy", "https://vdatum.noaa.gov/docs/datums.html", "https://resources.arcgis.com/en/help/main/10.1/000n/000n00000056000000.htm", "https://pro.arcgis.com/en/pro-app/3.6/tool-reference/data-management/supported-notation-formats.htm"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://coderalert0.github.io/mapsheet-site/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://coderalert0.github.io/mapsheet-site/#guides"}, {"@type": "ListItem", "position": 3, "name": "UTM and MGRS", "item": "https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does the letter after a UTM zone number mean?", "acceptedAnswer": {"@type": "Answer", "text": "In MGRS and USNG it is the 8° latitude band, so `18S` is a band in the northern hemisphere. Esri's documentation notes that in plain UTM notation the letter \"usually represents a latitude band\" as well. If a coordinate gives only N or S, confirm which convention it uses."}}, {"@type": "Question", "name": "How many digits should I give in an MGRS reference?", "acceptedAnswer": {"@type": "Answer", "text": "Give the precision you actually have. Eight digits (10 m) suits most field positions. Ten digits claims 1 m, much finer than typical phone accuracy of about 4.9 m under open sky (phone GPS accuracy)."}}, {"@type": "Question", "name": "Is NAD83 the same as WGS84?", "acceptedAnswer": {"@type": "Answer", "text": "Close, not identical: about 2 m apart for the realizations NOAA compares, and treated as equivalent except at the largest map scales. NAD27 is a different matter, with UTM shifts of around 200 m."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="./"><img src="icon.png" alt="" width="34" height="34"><span>Mapsheet</span></a>
+    <nav class="nav" aria-label="Site">
+      <a href="./#how">Features</a>
+      <a href="./#guides" aria-current="page">Guides</a>
+      <a href="./#support">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://coderalert0.github.io/mapsheet-site/fr/" hreflang="fr-CA" lang="fr-CA">Français</a>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/id6832417568">Get the app</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="guide">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="./">Home</a> <span aria-hidden="true">/</span> <a href="./#guides">Guides</a> <span aria-hidden="true">/</span> <span>UTM and MGRS</span></nav>
+<article>
+<h1>How do UTM and MGRS coordinates work?</h1>
+<p class="updated">Checked against its sources on <time datetime="2026-11-08">November 8, 2026</time></p>
+<div class="answer"><h2>Short answer</h2><p>UTM divides the world into 60 zones, each 6° of longitude wide, and gives every point an easting and a northing in meters inside its zone. MGRS, and the US National Grid that matches it, write the same UTM numbers with a latitude band letter and a two-letter code for each 100 km square, so 18SUJ23480647 pins a point to 10 m. Always note the datum, because NAD27 and NAD83 UTM values for the same spot typically differ by around 200 m.</p></div>
+<nav class="toc" aria-label="On this page"><p class="foot-title">On this page</p><ul><li><a href="#utm-zones">UTM zones</a></li><li><a href="#easting-and-northing">Easting and northing</a></li><li><a href="#reading-a-grid-reference-on-a-map">Reading a grid reference on a map</a></li><li><a href="#mgrs-and-the-us-national-grid">MGRS and the US National Grid</a></li><li><a href="#why-the-datum-matters">Why the datum matters</a></li><li><a href="#how-mapsheet-does-it">How Mapsheet does it</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ul></nav>
+<h2 id="utm-zones">UTM zones</h2>
+<p>The Universal Transverse Mercator (UTM) grid divides the world into 60 north-south zones, each 6° of longitude wide. Zone 1 runs from 180° to 174° west, and the numbers increase eastward to zone 60. The lower 48 United States fall in 10 zones, from zone 10 on the West Coast to zone 19 in New England. Inside each zone, coordinates are measured in meters, north and east.</p>
+<h2 id="easting-and-northing">Easting and northing</h2>
+<ul>
+<li><strong>Easting.</strong> The central meridian of every zone is given an easting of 500,000 m. Points west of it have eastings below 500,000; points east of it, above.</li>
+<li><strong>Northing.</strong> In the northern hemisphere, northing is measured from zero at the equator. To avoid negative numbers for locations south of the equator, the equator is assigned a false northing of 10,000,000 m, and values decrease going south. A southern-hemisphere northing of 6,250,000 m is therefore 3,750 km south of the equator.</li>
+</ul>
+<p>Because every zone repeats the same numbers, a UTM coordinate is incomplete without its zone and hemisphere.</p>
+<h2 id="reading-a-grid-reference-on-a-map">Reading a grid reference on a map</h2>
+<p>USGS 7.5-minute quadrangles show the UTM grid every 1,000 m, as blue ticks in the margin or as full grid lines. Each tick is labeled with its 1,000-meter value, and the full value is printed on the ticks nearest the southeast and northwest corners.</p>
+<p>Read right, then up. The USGS fact sheet's example: the grid line to the west of point P is 357,000 m east, and the line to the south is 4,276,000 m north. P is 800 m east and 750 m north of those lines, so its coordinates are 357,800 m east, 4,276,750 m north.</p>
+<h2 id="mgrs-and-the-us-national-grid">MGRS and the US National Grid</h2>
+<p>The US National Grid (USNG) standard says its coordinates "shall be identical to the MGRS numbering scheme" across the United States. A full reference has three parts:</p>
+<ol>
+<li><strong>Grid zone designation</strong>, such as <code>18S</code>: the UTM zone number plus a latitude band letter. There are 20 bands, lettered C to X without I and O, generally 8° high, starting at 80° south.</li>
+<li><strong>100,000-meter square</strong>, such as <code>UJ</code>: two letters. The first identifies the column, the second the row.</li>
+<li><strong>Easting then northing</strong> inside that square, always with the same number of digits for each.</li>
+</ol>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Digits</th>
+<th>Precision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18SUJ20</td>
+<td>2</td>
+<td>10 km</td>
+</tr>
+<tr>
+<td>18SUJ2306</td>
+<td>4</td>
+<td>1 km</td>
+</tr>
+<tr>
+<td>18SUJ234064</td>
+<td>6</td>
+<td>100 m</td>
+</tr>
+<tr>
+<td>18SUJ23480647</td>
+<td>8</td>
+<td>10 m</td>
+</tr>
+<tr>
+<td>18SUJ2348306479</td>
+<td>10</td>
+<td>1 m</td>
+</tr>
+</tbody>
+</table></div>
+<p>The digits are the UTM coordinate with its leading digits replaced by the square letters. The standard's Washington Monument example is UTM zone 18, 323,483 m east, 4,306,479 m north, which is 18SUJ2348306479. The <code>S</code> is a latitude band in the northern hemisphere, not "south". For general field work the standard calls 100 m or 10 m precision typical.</p>
+<h2 id="why-the-datum-matters">Why the datum matters</h2>
+<p>The same numbers mean different places on different datums. The USNG standard uses NAD83 or its international equivalent, WGS84, and requires NAD27 values to be labeled. Its example: one point is 18SUJ23480647 on NAD83 and 18SUJ23450626 (NAD 27), references that differ by 30 m in easting and 210 m in northing.</p>
+<ul>
+<li><strong>NAD27 to NAD83:</strong> in the lower 48 states the shift is 10 to 100 m in latitude/longitude, and UTM values change by around 200 m (USGS).</li>
+<li><strong>NAD83 and WGS84:</strong> NOAA notes the WGS 84 (G1150) realization differs from NAD 83 (1986) by about 2 m, and that except at the largest map scales the two can be treated as equivalent horizontally.</li>
+<li><strong>Which maps use which:</strong> most USGS maps published through 2006 use NAD27; US Topos are georeferenced to NAD83 or WGS84 (<a href="free-topo-maps-as-geospatial-pdf.html">where to get them</a>).</li>
+</ul>
+<p>Check the datum printed on the map before you compare its grid with GPS coordinates.</p>
+<h2 id="how-mapsheet-does-it">How Mapsheet does it</h2>
+<p>Mapsheet goes to typed coordinates in decimal degrees, degrees-minutes(-seconds), UTM or MGRS/USNG and shows distance and bearing to your points. CSV exports include UTM columns.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<h3 id="what-does-the-letter-after-a-utm-zone-number-mean">What does the letter after a UTM zone number mean?</h3>
+<p>In MGRS and USNG it is the 8° latitude band, so <code>18S</code> is a band in the northern hemisphere. Esri's documentation notes that in plain UTM notation the letter "usually represents a latitude band" as well. If a coordinate gives only N or S, confirm which convention it uses.</p>
+<h3 id="how-many-digits-should-i-give-in-an-mgrs-reference">How many digits should I give in an MGRS reference?</h3>
+<p>Give the precision you actually have. Eight digits (10 m) suits most field positions. Ten digits claims 1 m, much finer than typical phone accuracy of about 4.9 m under open sky (<a href="phone-gps-accuracy-in-the-field.html">phone GPS accuracy</a>).</p>
+<h3 id="is-nad83-the-same-as-wgs84">Is NAD83 the same as WGS84?</h3>
+<p>Close, not identical: about 2 m apart for the realizations NOAA compares, and treated as equivalent except at the largest map scales. NAD27 is a different matter, with UTM shifts of around 200 m.</p>
+<aside class="app-cta">
+  <div><h2>Your maps, with you on them</h2><p>Mapsheet shows your position on geospatial PDFs and GeoTIFFs with no signal: points, tracks, areas, UTM and MGRS. Free for 3 maps, on iPhone and iPad.</p></div>
+  <a class="badge" href="https://apps.apple.com/us/app/id6832417568"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="150" height="50"></a>
+</aside>
+<section class="sources"><h2>Sources</h2><ul><li><a href="https://pubs.usgs.gov/fs/2001/0077/report.pdf" rel="noopener">USGS Fact Sheet 077-01: The Universal Transverse Mercator (UTM) Grid</a></li><li><a href="https://www.fgdc.gov/standards/projects/FGDC-standards-projects/usng/fgdc_std_011_2001_usng.pdf" rel="noopener">FGDC-STD-011-2001: United States National Grid</a></li><li><a href="https://www.usgs.gov/faqs/how-large-north-american-datum-1927-nad-27-nad-83-shift" rel="noopener">USGS FAQ: How large is the NAD 27 to NAD 83 shift?</a></li><li><a href="https://www.usgs.gov/faqs/why-are-usgs-historical-topographic-maps-referenced-outdated-datums" rel="noopener">USGS FAQ: Why are USGS historical topographic maps referenced to outdated datums?</a></li><li><a href="https://www.gps.gov/gps-accuracy" rel="noopener">GPS.gov: GPS Accuracy</a></li><li><a href="https://vdatum.noaa.gov/docs/datums.html" rel="noopener">NOAA VDatum: A tutorial on datums</a></li><li><a href="https://resources.arcgis.com/en/help/main/10.1/000n/000n00000056000000.htm" rel="noopener">Esri ArcGIS Help 10.1: MGRS</a></li><li><a href="https://pro.arcgis.com/en/pro-app/3.6/tool-reference/data-management/supported-notation-formats.htm" rel="noopener">Esri ArcGIS Pro: Supported notation formats</a></li></ul><p class="muted">Guides summarize public sources. Check a map and a position against the ground before you rely on them.</p></section>
+<section class="related"><h2>Related guides</h2><ul><li><a href="what-is-a-geospatial-pdf.html">What is a geospatial PDF?</a></li><li><a href="free-topo-maps-as-geospatial-pdf.html">Where can I download free topo maps as geospatial PDFs?</a></li><li><a href="phone-gps-accuracy-in-the-field.html">How accurate is phone GPS in the field?</a></li></ul></section>
+</article>
+</div>
+</main>
+<footer>
+  <div class="in">
+    <div class="foot-about">
+      <a class="brand" href="./"><img src="icon.png" alt="" width="28" height="28"><span>Mapsheet</span></a>
+      <p>Your own maps, offline, with you on them. iPhone and iPad.</p>
+      <p>© 2026 Mapsheet. Mapsheet shows positions from your device's GPS. Check what a map shows against the ground, and don't rely on any one device for safety. Mapsheet is not affiliated with TerraGo, Esri, the USGS or NRCan; GeoPDF is a registered trademark of TerraGo Technologies.</p>
+    </div>
+    <nav aria-label="Guides"><p class="foot-title">Guides</p><a href="what-is-a-geospatial-pdf.html">Geospatial PDFs</a><a href="free-topo-maps-as-geospatial-pdf.html">Free topo maps</a><a href="utm-and-mgrs-coordinates-explained.html">UTM and MGRS</a><a href="phone-gps-accuracy-in-the-field.html">Phone GPS accuracy</a></nav>
+    <nav aria-label="App"><p class="foot-title">App</p><a href="https://apps.apple.com/us/app/id6832417568">App Store</a><a href="./#support">Support</a><a href="privacy.html">Privacy Policy</a><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a><a href="llms.txt">llms.txt</a></nav>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

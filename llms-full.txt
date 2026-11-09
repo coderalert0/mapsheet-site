@@ -8,7 +8,7 @@ Mapsheet shows positions from your device's GPS. Check what a map shows against 
 
 - Free for up to 3 maps at a time (a multi-page atlas counts as one), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.
 - Mapsheet Field costs $59.99 a year (two weeks free for new subscribers) or $9.99 a month in the US: unlimited maps.
-- Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per device in the US: everything in Field plus crew packs (maps, points, tracks and photos sent as one file, opened free by the crew), GPS averaging over 30 seconds with the standard error, and shapefile export.
+- Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per device in the US: everything in Field plus crew packs (maps, points, tracks and photos sent as one file; the crew opens them free, keeping 3 maps at a time on the free plan or every map with Field), GPS averaging over 30 seconds with the standard error, and shapefile export.
 - Maps never lock: if a plan ends, the user keeps every map and everything on it and only can't add maps past three.
 - Opens geospatial PDFs from ArcGIS, QGIS, Global Mapper, the USGS and NRCan (both the ISO 32000 geospatial encoding and the OGC/TerraGo LGIDict encoding, including GeoPDF files, multi-page atlases and rotated pages), GeoTIFFs and TIFFs zipped with their world file, and zipped downloads.
 - Coordinates: decimal degrees, degrees and minutes, degrees-minutes-seconds, UTM and MGRS/USNG, shown and typed. Understands UTM on common datums, Canada's provincial systems (MTM, Quebec and Ontario Lambert, BC Albers, Alberta 10TM), Australia's MGA zones, and any projection a map defines itself (WKT or GeoTIFF keys).
@@ -50,6 +50,313 @@ iPhone and iPad with iOS 17 or later.
 ### Is my data shared?
 
 No. Maps, points, tracks, photos and your position stay on your device. There's no account and no server. See the privacy policy.
+
+---
+
+# What is a geospatial PDF?
+
+> A geospatial (georeferenced) PDF is an ordinary PDF map that also stores the information needed to convert any point on the page into real-world coordinates. The coordinates are written inside the file, using either the ISO 32000 geospatial measure dictionary or the older OGC best-practice encoding (LGIDict), so a GPS app can place your position on the map without a network connection.
+
+Source page: https://coderalert0.github.io/mapsheet-site/what-is-a-geospatial-pdf.html
+Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+
+## What makes a PDF geospatial
+
+A normal PDF only knows page positions. A geospatial PDF adds a few objects that tie those positions to a coordinate reference system: the datum, the projection, and how page points line up with map coordinates. The OGC document says this "allows association of an arbitrary coordinate reference system to a PDF illustration", so software can convert in both directions.
+
+A map that shows UTM ticks or a graticule in its margin is not geospatial unless those objects are present. The printed grid is only ink.
+
+## The two ways coordinates are stored
+
+| | ISO 32000 encoding | OGC best practice (LGIDict) |
+|---|---|---|
+| Origin | Adobe, Acrobat 9 (June 2008), as Extension Level 3 to PDF 1.7 | Layton Graphics Inc. in the early 2000s; maintained by TerraGo Technologies from 2005 |
+| Where it lives | A measure dictionary with subtype GEO, attached to a viewport (a region of the page) or to an image or form object | An `LGIDict` entry on the page object: one map frame or an array of map frames |
+| How points are tied | Latitude/longitude control points (`GPTS`) matched to positions inside the viewport (`LPTS`) | A `Registration` array of point pairs (PDF x, PDF y, map x, map y), or a transformation matrix (`CTM`) |
+| Coordinate system | An EPSG code or WKT | A `Projection` dictionary using the document's own datum and projection codes |
+| Status | Part of ISO 32000-2 (PDF 2.0), published 2017 | OGC 08-139r3, dated 17 January 2011, an OGC Best Practice, "not an OGC Standard" |
+
+The OGC encoding marks the map's boundary with a `Neatline`, required when a page holds several map frames, such as an inset. The OGC document also admits that its datum, ellipsoid and coordinate system codes "do not conform to the EPSG database".
+
+GDAL, the open-source geospatial library, reads both encodings, labels the OGC one "not recommended", and since version 3.11 writes only ISO 32000.
+
+## How ArcGIS Pro, QGIS and the USGS make them
+
+- **ArcGIS Pro.** In the Export pane, **Export georeference information** will "include geospatial information from the map frames", so supported PDF readers can extract x,y coordinates. **Layers and attributes** adds PDF layers and, optionally, feature attributes.
+- **QGIS.** Exporting a print layout to PDF or TIFF creates georeferenced output by default; **Append georeference information** works only if the reference map is on the first page. **Create Geospatial PDF** adds map themes and vector feature information.
+- **USGS.** US Topo maps are built from The National Map's GIS data and published as layered geospatial PDFs. The Library of Congress records that US Topos moved to the ISO 32000 encoding in 2017, while the Historical Topographic Map Collection still uses the OGC encoding ([where to download them](https://coderalert0.github.io/mapsheet-site/free-topo-maps-as-geospatial-pdf.md)).
+
+## How to tell whether a PDF has coordinates
+
+1. **Run `gdalinfo` on it.** GDAL reads geospatial PDFs "by extracting georeferencing information". `gdalinfo` prints the file's coordinate system in WKT and its corner coordinates. If no coordinate system appears, there is nothing for a GPS app to use.
+2. **Check the datum it reports.** GDAL treats unrecognized OGC-encoding datums as WGS 84-based, so a file can open and still sit in the wrong place; datums can differ by hundreds of meters ([datums explained](https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.md)).
+3. **Check how it was made.** A PDF exported with the georeference option off, or a scan, has no coordinates at all.
+
+## How Mapsheet does it
+
+Mapsheet opens your own geospatial PDFs and GeoTIFFs on iPhone and iPad and shows your GPS position on them with no connection. You can drop points, record tracks and measure lines and areas on the map, then export GPX, KML, KMZ or CSV. The Free plan holds 3 maps at a time.
+
+## Frequently asked questions
+
+### Is a geospatial PDF the same as a georeferenced PDF?
+
+Yes, both describe a PDF that carries its own coordinates. You will also see GeoPDF® (TerraGo's trademark for its geospatial PDFs); the OGC document notes that following its encoding gives no right to use that trademark.
+
+### Which encoding should new maps use?
+
+ISO 32000. It is part of PDF 2.0, the USGS moved US Topo to it in 2017, and GDAL now writes nothing else. Map readers still need the OGC encoding for older files, including the USGS historical scans.
+
+### Can I add coordinates to a scanned map?
+
+Yes, with a GIS. The QGIS Georeferencer aligns "unreferenced raster or vector layers to known coordinate systems using Ground Control Points" and can save the result as a GeoTIFF.
+
+## Sources
+
+- [OGC 08-139r3: PDF Georegistration Encoding Best Practice Version 2.2](https://docs.ogc.org/bp/08-139r3/08-139r3.pdf)
+- [Library of Congress, Sustainability of Digital Formats: PDF 1.7 ExtensionLevel 3, Geospatial Encoding (Adobe), fdd000315](https://loc.gov/preservation/digital/formats/fdd/fdd000315.shtml)
+- [Library of Congress, Sustainability of Digital Formats: TerraGo file format, fdd000522](https://www.loc.gov/preservation/digital/formats/fdd/fdd000522.shtml)
+- [Library of Congress, Sustainability of Digital Formats: OGC Best Practice 08-139 encoding, fdd000312](https://loc.gov/preservation/digital/formats/fdd/fdd000312.shtml)
+- [Esri: Export to PDF, ArcGIS Pro documentation](https://doc.esri.com/en/arcgis-pro/latest/help/sharing/overview/pdf-export.html)
+- [QGIS Documentation: Creating an Output (print layouts)](https://docs.qgis.org/latest/en/docs/user_manual/print_layout/create_output.html)
+- [QGIS Documentation: Georeferencer](https://docs.qgis.org/latest/en/docs/user_manual/managing_data_source/georeferencer.html)
+- [USGS: US Topo, Maps for America](https://www.usgs.gov/programs/national-geospatial-program/us-topo-maps-america)
+- [USGS FAQ: Why are USGS historical topographic maps referenced to outdated datums?](https://www.usgs.gov/faqs/why-are-usgs-historical-topographic-maps-referenced-outdated-datums)
+- [GDAL: PDF, Geospatial PDF raster driver](https://gdal.org/en/stable/drivers/raster/pdf.html)
+- [GDAL: gdalinfo](https://gdal.org/en/stable/programs/gdalinfo.html)
+- [iText 5 API: MeasureGeospatial (ISO 32000 geospatial measure dictionary entries)](https://api.itextpdf.com/iText5/java/5.5.13.1/com/itextpdf/text/pdf/spatial/MeasureGeospatial.html)
+
+
+---
+
+# Where can I download free topo maps as geospatial PDFs?
+
+> In the United States, the USGS gives away current US Topo maps, scanned historical topographic maps and custom OnDemand Topos as geospatial PDF or GeoTIFF files through topoView, The National Map Downloader and topoBuilder. Natural Resources Canada still hosts free CanTopo, CanMatrix and Toporama sheets, but they are legacy products that are no longer updated. New South Wales publishes its topographic series as free georeferenced PDFs.
+
+Source page: https://coderalert0.github.io/mapsheet-site/free-topo-maps-as-geospatial-pdf.html
+Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+
+## United States: three free USGS map products
+
+**US Topo (2009 to present).** Each sheet has the same extent as the classic 7.5-minute, 1:24,000-scale quadrangle (scale varies in Alaska and Puerto Rico). The maps are built from The National Map's GIS data, published as layered geospatial PDFs whose layers you can switch on or off, projected in UTM, and printed with latitude/longitude and the US National Grid. The USGS describes them as "available for free and immediate download".
+
+**Historical Topographic Map Collection (1884 to 2006).** Over 185,000 georeferenced scans of every scale and edition of printed USGS topographic maps at 1:250,000 and larger. topoView serves them as geospatial PDF, GeoTIFF, JPEG and KMZ files.
+
+**OnDemand Topos.** topoBuilder makes a custom map centered wherever you choose, as a 7.5-Minute, 25K Recreational, 100K or 250K topo, in geospatial PDF or TIFF. It is free; you get a download link by email, "typically delivered within 24 hours but may take up to 5 business days."
+
+Where to get them:
+
+- **topoView** ([ngmdb.usgs.gov/topoview/viewer](https://ngmdb.usgs.gov/topoview/viewer/)) for browsing and downloading single maps, historical or US Topo, as geospatial PDF, GeoTIFF, JPEG or KMZ.
+- **The National Map Downloader** ([apps.nationalmap.gov/downloader](https://apps.nationalmap.gov/downloader/)) for bulk orders of up to 5,000 maps at once.
+- **topoBuilder** ([topobuilder.nationalmap.gov](https://topobuilder.nationalmap.gov/)) for OnDemand Topos.
+
+Watch the datum. Most USGS maps published through 2006 use NAD27, while US Topos are georeferenced to NAD83 or WGS84 ([why the datum matters](https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.md)).
+
+## Canada: Natural Resources Canada's legacy sheets
+
+NRCan's free topographic rasters are still online under the Open Government Licence – Canada, but their catalogue records call them legacy products, and NRCan's FAQ answers "No" to updates for every one.
+
+| Product | Scale | Formats | Coverage | Data validity |
+|---|---|---|---|---|
+| CanTopo | 1:50,000 | PDF, geospatial PDF, TIFF, GeoTIFF | About 2,234 maps, 22% of the landmass, mainly northern Canada | 1946–2012 (average 2007) |
+| CanMatrix, Georeferenced | 1:50,000 and 1:250,000 | GeoTIFF | Georeferenced scans of printed maps | 1944–2012 collection |
+| Toporama | 1:50,000 | GeoTIFF, in UTM or latitude/longitude | All of Canada (15,308 files) | 1944–2012 (average 1998) |
+
+The georeferenced products use NAD83, and NRCan rates CanTopo and Toporama at "30 metres or better". Skip the CanMatrix Print Ready PDFs and TIFFs: they are not georeferenced.
+
+Download directories:
+
+- CanTopo and CanMatrix: [ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/](https://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/). The 1:50,000 sheets sit in folders named by National Topographic System number, for example `50k/031/b/05/` for sheet 31B/05. A KMZ index is in `index/`.
+- Toporama: [ftp.maps.canada.ca/pub/nrcan_rncan/raster/toporama/](https://ftp.maps.canada.ca/pub/nrcan_rncan/raster/toporama/), with `50k_utm_tif/` and `50k_geo_tif/` folders.
+
+## Australia: New South Wales
+
+The NSW Government publishes its topographic series as "geo-referenced PDFs, so you can use them on GPS devices, phones or tablets". Scales are 1:25,000 in the east, 1:50,000 in the central region and 1:100,000 in the far west. Download from the [NSW Topographic Maps viewer](https://portal.spatial.nsw.gov.au/portal/apps/webappviewer/index.html?id=06e3c2e0de1e4efda863854048c613c6) or the [Spatial Collaboration Portal](https://portal.spatial.nsw.gov.au/client/toolsandviewers). The maps are free to use and print under Creative Commons 4.0. Printing at 100% scale needs a large-format printer; most sheets finish at 1135 mm × 580 mm.
+
+## How Mapsheet does it
+
+Mapsheet shows your GPS position offline on geospatial PDFs and GeoTIFFs you have downloaded, on iPhone and iPad. The Free plan holds 3 maps at a time. A crew pack sends maps and points to a whole crew in one file, so everyone carries the same sheets.
+
+## Frequently asked questions
+
+### Are USGS topo maps really free?
+
+Yes. US Topos, the historical scans and OnDemand Topos are all free to download. Printed copies are sold through the USGS Store, the only USGS website for buying printed topographic maps.
+
+### Why doesn't my old USGS map line up with my GPS?
+
+It is probably on NAD27. The USGS says the NAD27 to NAD83 shift of the latitude/longitude graticule is 10 to 100 m on the ground across the lower 48 states, and UTM grid values change by around 200 m. Check the datum in the map collar, and where you can, use a US Topo, which is on NAD83 or WGS84.
+
+### Does NRCan publish current topographic maps?
+
+Not as ready-made map sheets. Its current topographic data is CanVec: more than 60 feature classes in 8 themes, delivered as file geodatabases or shapefiles, which you would have to style into a map in GIS software yourself.
+
+## Sources
+
+- [USGS: US Topo, Maps for America](https://www.usgs.gov/programs/national-geospatial-program/us-topo-maps-america)
+- [USGS: Historical Topographic Maps, Preserving the Past](https://www.usgs.gov/programs/national-geospatial-program/historical-topographic-maps-preserving-past)
+- [USGS: Topographic Map Access Points](https://www.usgs.gov/the-national-map-data-delivery/topographic-map-access-points)
+- [USGS: topoBuilder](https://www.usgs.gov/programs/national-geospatial-program/topobuilder)
+- [USGS FAQ: How do I find, download, or order topographic maps?](https://www.usgs.gov/faqs/how-do-i-find-download-or-order-topographic-maps)
+- [USGS FAQ: Why are USGS historical topographic maps referenced to outdated datums?](https://www.usgs.gov/faqs/why-are-usgs-historical-topographic-maps-referenced-outdated-datums)
+- [USGS FAQ: How large is the NAD 27 to NAD 83 shift?](https://www.usgs.gov/faqs/how-large-north-american-datum-1927-nad-27-nad-83-shift)
+- [Open Government Portal: Digital Topographic Raster Maps, 1944-2012](https://open.canada.ca/data/en/dataset/d248b5be-5887-4cfb-942f-d425d82e6ea9)
+- [Open Government Portal: Toporama, 1945-2013](https://open.canada.ca/data/en/dataset/ff383f5c-0772-46f3-84df-c2cb860d0da2)
+- [Natural Resources Canada: Geomatics frequently asked questions](https://natural-resources.canada.ca/science-data/science-research/geomatics/frequently-asked-questions)
+- [Open Government Portal: Topographic Data of Canada, CanVec Series](https://open.canada.ca/data/en/dataset/8ba2aa2a-7bb9-4448-b4d7-f164409fe056)
+- [NRCan download directory: raster/topographic](https://ftp.maps.canada.ca/pub/nrcan_rncan/raster/topographic/)
+- [NRCan download directory: raster/toporama](https://ftp.maps.canada.ca/pub/nrcan_rncan/raster/toporama/)
+- [NSW Government: NSW topographic maps](https://www.nsw.gov.au/environment-land-and-water/spatial-data-and-mapping/topographic-maps)
+
+
+---
+
+# How do UTM and MGRS coordinates work?
+
+> UTM divides the world into 60 zones, each 6° of longitude wide, and gives every point an easting and a northing in meters inside its zone. MGRS, and the US National Grid that matches it, write the same UTM numbers with a latitude band letter and a two-letter code for each 100 km square, so 18SUJ23480647 pins a point to 10 m. Always note the datum, because NAD27 and NAD83 UTM values for the same spot typically differ by around 200 m.
+
+Source page: https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.html
+Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+
+## UTM zones
+
+The Universal Transverse Mercator (UTM) grid divides the world into 60 north-south zones, each 6° of longitude wide. Zone 1 runs from 180° to 174° west, and the numbers increase eastward to zone 60. The lower 48 United States fall in 10 zones, from zone 10 on the West Coast to zone 19 in New England. Inside each zone, coordinates are measured in meters, north and east.
+
+## Easting and northing
+
+- **Easting.** The central meridian of every zone is given an easting of 500,000 m. Points west of it have eastings below 500,000; points east of it, above.
+- **Northing.** In the northern hemisphere, northing is measured from zero at the equator. To avoid negative numbers for locations south of the equator, the equator is assigned a false northing of 10,000,000 m, and values decrease going south. A southern-hemisphere northing of 6,250,000 m is therefore 3,750 km south of the equator.
+
+Because every zone repeats the same numbers, a UTM coordinate is incomplete without its zone and hemisphere.
+
+## Reading a grid reference on a map
+
+USGS 7.5-minute quadrangles show the UTM grid every 1,000 m, as blue ticks in the margin or as full grid lines. Each tick is labeled with its 1,000-meter value, and the full value is printed on the ticks nearest the southeast and northwest corners.
+
+Read right, then up. The USGS fact sheet's example: the grid line to the west of point P is 357,000 m east, and the line to the south is 4,276,000 m north. P is 800 m east and 750 m north of those lines, so its coordinates are 357,800 m east, 4,276,750 m north.
+
+## MGRS and the US National Grid
+
+The US National Grid (USNG) standard says its coordinates "shall be identical to the MGRS numbering scheme" across the United States. A full reference has three parts:
+
+1. **Grid zone designation**, such as `18S`: the UTM zone number plus a latitude band letter. There are 20 bands, lettered C to X without I and O, generally 8° high, starting at 80° south.
+2. **100,000-meter square**, such as `UJ`: two letters. The first identifies the column, the second the row.
+3. **Easting then northing** inside that square, always with the same number of digits for each.
+
+| Reference | Digits | Precision |
+|---|---|---|
+| 18SUJ20 | 2 | 10 km |
+| 18SUJ2306 | 4 | 1 km |
+| 18SUJ234064 | 6 | 100 m |
+| 18SUJ23480647 | 8 | 10 m |
+| 18SUJ2348306479 | 10 | 1 m |
+
+The digits are the UTM coordinate with its leading digits replaced by the square letters. The standard's Washington Monument example is UTM zone 18, 323,483 m east, 4,306,479 m north, which is 18SUJ2348306479. The `S` is a latitude band in the northern hemisphere, not "south". For general field work the standard calls 100 m or 10 m precision typical.
+
+## Why the datum matters
+
+The same numbers mean different places on different datums. The USNG standard uses NAD83 or its international equivalent, WGS84, and requires NAD27 values to be labeled. Its example: one point is 18SUJ23480647 on NAD83 and 18SUJ23450626 (NAD 27), references that differ by 30 m in easting and 210 m in northing.
+
+- **NAD27 to NAD83:** in the lower 48 states the shift is 10 to 100 m in latitude/longitude, and UTM values change by around 200 m (USGS).
+- **NAD83 and WGS84:** NOAA notes the WGS 84 (G1150) realization differs from NAD 83 (1986) by about 2 m, and that except at the largest map scales the two can be treated as equivalent horizontally.
+- **Which maps use which:** most USGS maps published through 2006 use NAD27; US Topos are georeferenced to NAD83 or WGS84 ([where to get them](https://coderalert0.github.io/mapsheet-site/free-topo-maps-as-geospatial-pdf.md)).
+
+Check the datum printed on the map before you compare its grid with GPS coordinates.
+
+## How Mapsheet does it
+
+Mapsheet goes to typed coordinates in decimal degrees, degrees-minutes(-seconds), UTM or MGRS/USNG and shows distance and bearing to your points. CSV exports include UTM columns.
+
+## Frequently asked questions
+
+### What does the letter after a UTM zone number mean?
+
+In MGRS and USNG it is the 8° latitude band, so `18S` is a band in the northern hemisphere. Esri's documentation notes that in plain UTM notation the letter "usually represents a latitude band" as well. If a coordinate gives only N or S, confirm which convention it uses.
+
+### How many digits should I give in an MGRS reference?
+
+Give the precision you actually have. Eight digits (10 m) suits most field positions. Ten digits claims 1 m, much finer than typical phone accuracy of about 4.9 m under open sky ([phone GPS accuracy](https://coderalert0.github.io/mapsheet-site/phone-gps-accuracy-in-the-field.md)).
+
+### Is NAD83 the same as WGS84?
+
+Close, not identical: about 2 m apart for the realizations NOAA compares, and treated as equivalent except at the largest map scales. NAD27 is a different matter, with UTM shifts of around 200 m.
+
+## Sources
+
+- [USGS Fact Sheet 077-01: The Universal Transverse Mercator (UTM) Grid](https://pubs.usgs.gov/fs/2001/0077/report.pdf)
+- [FGDC-STD-011-2001: United States National Grid](https://www.fgdc.gov/standards/projects/FGDC-standards-projects/usng/fgdc_std_011_2001_usng.pdf)
+- [USGS FAQ: How large is the NAD 27 to NAD 83 shift?](https://www.usgs.gov/faqs/how-large-north-american-datum-1927-nad-27-nad-83-shift)
+- [USGS FAQ: Why are USGS historical topographic maps referenced to outdated datums?](https://www.usgs.gov/faqs/why-are-usgs-historical-topographic-maps-referenced-outdated-datums)
+- [GPS.gov: GPS Accuracy](https://www.gps.gov/gps-accuracy)
+- [NOAA VDatum: A tutorial on datums](https://vdatum.noaa.gov/docs/datums.html)
+- [Esri ArcGIS Help 10.1: MGRS](https://resources.arcgis.com/en/help/main/10.1/000n/000n00000056000000.htm)
+- [Esri ArcGIS Pro: Supported notation formats](https://pro.arcgis.com/en/pro-app/3.6/tool-reference/data-management/supported-notation-formats.htm)
+
+
+---
+
+# How accurate is phone GPS in the field?
+
+> Under open sky, GPS.gov says smartphones are typically accurate to within a 4.9 m (16 ft) radius. Under forest canopy, peer-reviewed tests have measured root-mean-square errors of about 4 to 15 m depending on the phone and the canopy, and in one leaf-off forest test no handheld device reached sub-meter accuracy. Waiting for the fix to settle, averaging and an external GNSS receiver with corrections all help.
+
+Source page: https://coderalert0.github.io/mapsheet-site/phone-gps-accuracy-in-the-field.html
+Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+
+## Open sky: about 5 meters
+
+GPS.gov states that "GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) radius under open sky." The figure is the mean measured by a smartphone lab with over a thousand participants in a hundred countries (van Diggelen and Enge, ION GNSS+ 2015).
+
+The US government commits to a daily global average user range error of 2.0 m or better, with 95% probability. GPS.gov notes that this figure describes the signal in space, not the accuracy of a user's receiver. On the ground, accuracy is degraded by signal blockage from "buildings, bridges, trees, etc.", indoor use, reflected signals (multipath), satellite geometry, atmospheric conditions and receiver quality.
+
+## Under forest canopy: worse, and it varies by phone
+
+| Study | Devices | Conditions | Horizontal error |
+|---|---|---|---|
+| Purfürst 2022, *Sensors* | 10 Android phones and a Trimble Geo 7X | 15 forest sites in Germany; about 10-minute static sessions; error of every 1-second fix | Phones: DRMS 4.56 m (best) to 14.59 m (worst). Multi-frequency phones 6.99 m, single-frequency 9.13 m. Corrected Trimble reference 3.26 m |
+| Lee et al. 2023, *PLOS ONE* | iPhone 12 Pro, Garmin Oregon 700, Trimble Juno T41 | Leaf-off deciduous forest in Georgia, USA; 26 points visited 20 times; each position an average of 10 fixes over about 30 seconds | Average RMSE: iPhone 3.91 m, Garmin 8.11 m, Trimble 3.45 m |
+
+Purfürst found "a strong significant correlation between canopy density and positional accuracy" and big differences even between identical phones. Lee and colleagues concluded that "sub-meter positional accuracy was not attainable by any of the devices employed in forested conditions." Purfürst also cites studies in which open-area accuracy was two to six times better than under forest.
+
+## What helps
+
+- **Wait for the fix to settle.** Apple's documentation says the first fix "may take several seconds", and that iOS may send another update "if the hardware gathers a more accurate location reading." Watch the accuracy number drop before you mark a point.
+- **Average.** Purfürst cites studies in which longer averaging "can usually improve it significantly", while noting that even 2 minutes of waiting is too long in everyday work.
+- **Use an external receiver with corrections.** GPS.gov says dual-frequency receivers and/or augmentation systems "can enable real-time positioning within a few centimeters." In Tomaštík and Everett's 2023 *Sensors* study, a low-cost dual-frequency receiver (u-blox F9P), recording 20 minutes and post-processed against a reference station 2.4 km away, had median errors under 5 cm beneath canopy. A Pixel 5 phone's raw data, processed the same way, came out at about 1.5 m.
+
+## Reading the accuracy number
+
+On iPhone and iPad, the number is Core Location's `horizontalAccuracy`: "The radius of uncertainty for the location, measured in meters." The reported latitude and longitude are the center of that circle, and a negative value means the position is invalid. Apple's documentation does not state a confidence level.
+
+Android defines its number as a radius with a 68% chance that the true location is inside it, so roughly one fix in three falls outside the circle. On either platform, the number is the device's own estimate, not a check against a surveyed point.
+
+## How Mapsheet does it
+
+Mapsheet shows your GPS position on your own [geospatial PDFs](https://coderalert0.github.io/mapsheet-site/what-is-a-geospatial-pdf.md) and GeoTIFFs offline, and Bluetooth GNSS receivers that provide location to iOS work with it. On the Crew plan, GPS averaging averages fixes over 30 seconds and shows the standard error, which reflects how tightly the fixes agreed, not how close the average is to the true point.
+
+## Frequently asked questions
+
+### Why does my phone show ±3 m when I'm clearly farther off?
+
+The figure is an estimate, not a measurement. On Android it is defined to contain the true position only 68% of the time, and under trees GPS.gov lists both signal blockage and reflected signals as sources of error.
+
+### How long should I average a point under trees?
+
+None of the studies above found a waiting time that makes a phone sub-meter under canopy. Lee's 30-second averages gave about 4 m RMSE with an iPhone, and the same paper cites earlier work in which 10 minutes of observation under canopy, even with post-processing, did not reach sub-meter accuracy.
+
+### Will an external GNSS receiver get me sub-meter accuracy under canopy?
+
+It depends on the receiver and on corrections. The centimeter-level results above came from a dual-frequency receiver post-processed against a reference station, and GPS.gov credits "dual-frequency receivers and/or augmentation systems" for real-time centimeter work. The mapping-grade Trimble Juno T41 in Lee's test averaged 3.45 m RMSE.
+
+## Sources
+
+- [GPS.gov: GPS Accuracy](https://www.gps.gov/gps-accuracy)
+- [Purfürst T. (2022). Evaluation of Static Autonomous GNSS Positioning Accuracy Using Single-, Dual-, and Tri-Frequency Smartphones in Forest Canopy Environments. Sensors 22(3):1289](https://pmc.ncbi.nlm.nih.gov/articles/PMC8838512/)
+- [Lee T., Bettinger P., Merry K., Cieszewski C. (2023). The effects of nearby trees on the positional accuracy of GNSS receivers in a forest environment. PLOS ONE 18(3):e0283090](https://pmc.ncbi.nlm.nih.gov/articles/PMC10016660/)
+- [Tomaštík J., Everett T. (2023). Static Positioning under Tree Canopy Using Low-Cost GNSS Receivers and Adapted RTKLIB Software. Sensors 23(6):3136](https://pmc.ncbi.nlm.nih.gov/articles/PMC10056071/)
+- [van Diggelen F., Enge P. (2015). The World's first GPS MOOC and Worldwide Laboratory using Smartphones. ION GNSS+ 2015](https://www.ion.org/publications/abstract.cfm?articleID=13079)
+- [Apple Developer: CLLocation horizontalAccuracy](https://developer.apple.com/documentation/corelocation/cllocation/horizontalaccuracy)
+- [Apple Developer: CLLocationManager startUpdatingLocation()](https://developer.apple.com/documentation/corelocation/cllocationmanager/startupdatinglocation%28%29)
+- [Android Developers: Location (getAccuracy)](https://developer.android.com/reference/android/location/Location)
+
 
 ---
 
