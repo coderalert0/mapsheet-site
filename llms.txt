@@ -24,7 +24,7 @@ Mapsheet shows positions from your device's GPS. Check what a map shows against 
 - [Where can I download free topo maps as geospatial PDFs?](https://coderalert0.github.io/mapsheet-site/free-topo-maps-as-geospatial-pdf.md): Where to download free topographic maps for offline GPS use, from USGS US Topo, historical topos and topoBuilder to NRCan's legacy sheets and NSW topo maps.
 - [How do UTM and MGRS coordinates work?](https://coderalert0.github.io/mapsheet-site/utm-and-mgrs-coordinates-explained.md): How UTM zones, eastings and northings, MGRS and US National Grid references and map datums work, with worked examples from USGS and FGDC sources.
 - [How accurate is phone GPS in the field?](https://coderalert0.github.io/mapsheet-site/phone-gps-accuracy-in-the-field.md): Phone GPS accuracy in open sky and under forest canopy, from GPS.gov and peer-reviewed field tests, and how waiting, averaging and external receivers help.
-- [How do I get a fire's incident maps onto my phone for use with no signal?](https://coderalert0.github.io/mapsheet-site/wildfire-incident-maps-on-your-phone.md): Where US wildfire incident maps are posted, what the QR codes on printed maps open, why most are geospatial PDFs, and how to keep the current day's maps on a phone with no signal.
+- [How do I get a fire's incident maps onto my phone for use with no signal?](https://coderalert0.github.io/mapsheet-site/wildfire-incident-maps-on-your-phone.md): Where US wildfire incident maps are posted, what the QR codes on printed maps open, and how to keep today's maps on your phone with no signal.
 
 ## App
 

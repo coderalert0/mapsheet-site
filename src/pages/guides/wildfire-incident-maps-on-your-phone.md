@@ -1,6 +1,6 @@
 ---
 title: Wildfire Incident Maps on Your Phone, Offline
-description: Where US wildfire incident maps are posted, what the QR codes on printed maps open, why most are geospatial PDFs, and how to keep the current day's maps on a phone with no signal.
+description: Where US wildfire incident maps are posted, what the QR codes on printed maps open, and how to keep today's maps on your phone with no signal.
 h1: How do I get a fire's incident maps onto my phone for use with no signal?
 nav: Incident maps offline
 answer: US incident teams post their public maps on the NIFC File Share at ftp.wildfire.gov, under public/incident_specific_maps, sorted by geographic area, year and incident. The QR code printed on an incident map often opens that incident's QR folder, which the team overwrites with the current maps. The maps are almost always geospatial PDFs exported from ArcGIS Pro, so any GeoPDF-capable app shows your position on them offline once they are downloaded. Incident Action Plans are not in the public area: since May 4, 2026 they sit behind a FAMAuth sign-in.
