@@ -285,7 +285,7 @@ for g in guides:
 cards = "".join(f'<li><a href="{g["slug"]}.html"><strong>{html.escape(g["h1"])}</strong><span>{html.escape(g["description"])}</span></a></li>' for g in guides)
 home = (PAGES / "home.html").read_text().replace("{APP}", APP).replace("{GUIDES}", f'<ul class="guides">{cards}</ul>')
 faqs = re.findall(r"<details><summary>(.+?)</summary><p>(.+?)</p></details>", home)
-SHOTS = ["map", "point", "edit", "features"]
+SHOTS = ["map", "fires", "freemaps", "crewnearby"]
 home_schema = [
     {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": BASE, "description": HOME_DESCRIPTION, "publisher": PUBLISHER, "inLanguage": "en-US"},
     {"@context": "https://schema.org", "@type": "MobileApplication", "name": APP_NAME, "alternateName": NAME, "url": BASE,
