@@ -41,13 +41,14 @@ SUMMARY = ("Mapsheet is an offline map app for iPhone and iPad that shows your G
 FACTS = [
     "Free for up to 3 maps at a time (a multi-page atlas counts as one), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.",
     "Mapsheet Field costs $59.99 a year (two weeks free for new subscribers) or $9.99 a month in the US: unlimited maps.",
-    "Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per device in the US: everything in Field plus crew packs (maps, points, tracks and photos sent as one file; the crew opens them free, keeping 3 maps at a time on the free plan or every map with Field), GPS averaging over 30 seconds with the standard error, and shapefile export.",
+    "Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per person in the US (organizations can buy seats through Apple Business Manager): everything in Field plus crew packs (maps, points, tracks and photos sent as one file; the crew opens them free, keeping 3 maps at a time on the free plan or every map with Field), GPS averaging over 30 seconds with the standard error, and shapefile export.",
     "Maps never lock: if a plan ends, the user keeps every map and everything on it and only can't add maps past three.",
     "Opens geospatial PDFs from ArcGIS, QGIS, Global Mapper, the USGS and NRCan (both the ISO 32000 geospatial encoding and the OGC/TerraGo LGIDict encoding, including GeoPDF files, multi-page atlases and rotated pages), GeoTIFFs and TIFFs zipped with their world file, and zipped downloads.",
     "Coordinates: decimal degrees, degrees and minutes, degrees-minutes-seconds, UTM and MGRS/USNG, shown and typed. Understands UTM on common datums, Canada's provincial systems (MTM, Quebec and Ontario Lambert, BC Albers, Alberta 10TM), Australia's MGA zones, and any projection a map defines itself (WKT or GeoTIFF keys).",
     "Field tools: GPS position with accuracy and heading in airplane mode; Bluetooth GNSS receivers that provide location to iOS; points with symbols, colours, notes and photos; tracks that keep recording with the screen locked; lines and areas in metric or imperial units with draggable corners; distance and bearing to any point.",
     "Exports GPX, KML, KMZ and CSV (with UTM columns) on every plan, shapefiles on Crew; imports GPX, KML, KMZ, CSV and zipped shapefiles.",
     "Privacy: no account, no server and no analytics. Maps, points, tracks, photos and location stay on the device. App Store privacy label: Data Not Collected.",
+    "Coming in version 1.1: adding maps from a link or a QR code (incident teams' map folders on the national fire file share, direct PDF/GeoTIFF links, Avenza-style map lists, link pages), a free map list (USGS US Topo and historical topos, Forest Service FSTopo, NRCan, NSW, Queensland, LINZ Topo50; each map downloads from its publisher), offline aerial and topo map downloads (USGS for the US, LINZ imagery for New Zealand), and Crew seats bought by organizations through Apple Business Manager. These online features are optional: the core app never needs a connection.",
     "Runs on iPhone and iPad with iOS 17 or later, in English and French (Canada). Launched on the App Store in November 2026. The home page and privacy policy are also in French: " + BASE + "fr/",
 ]
 
@@ -93,7 +94,7 @@ CHROME = {
            "alt": "Mapsheet affichant une position GPS sur une carte topographique, avec des points, une trace et une surface"},
 }
 # Pages that exist in both languages: (English path, French path) under BASE.
-TWINS = {"index": ("", "fr/"), "privacy": ("privacy.html", "fr/confidentialite.html")}
+TWINS = {"index": ("", "fr/"), "privacy": ("privacy.html", "fr/confidentialite.html"), "terms": ("terms.html", "fr/conditions.html")}
 
 
 def page(slug, title, description, body, *, schema=(), kind="article", current="", root="", markdown_twin=False,
@@ -115,6 +116,7 @@ def page(slug, title, description, body, *, schema=(), kind="article", current="
     home = "./" if lang == "fr" else (root or "./")
     app = APP_FR if lang == "fr" else APP
     privacy_file = "confidentialite.html" if lang == "fr" else "privacy.html"
+    terms_file = "conditions.html" if lang == "fr" else "terms.html"
     return f"""<!doctype html>
 <html lang="{'fr-CA' if lang == 'fr' else 'en'}">
 <head>
@@ -169,7 +171,7 @@ def page(slug, title, description, body, *, schema=(), kind="article", current="
       <p>© 2026 {NAME}. {c["disclaimer"]}</p>
     </div>
     <nav aria-label="Guides"><p class="foot-title">{c["guides"]}</p>{FOOTER_GUIDES.replace('href="', f'href="{root}')}</nav>
-    <nav aria-label="App"><p class="foot-title">{c["app"]}</p><a href="{app}">App Store</a><a href="{home}#support">{c["support"]}</a><a href="{home if lang == "fr" else root}{privacy_file}">{c["policy"]}</a><a href="{TERMS}">{c["terms"]}</a><a href="{root}llms.txt">llms.txt</a></nav>
+    <nav aria-label="App"><p class="foot-title">{c["app"]}</p><a href="{app}">App Store</a><a href="{home}#support">{c["support"]}</a><a href="{home if lang == "fr" else root}{privacy_file}">{c["policy"]}</a><a href="{home if lang == "fr" else root}{terms_file}">{c["terms"]}</a><a href="{root}llms.txt">llms.txt</a></nav>
   </div>
 </footer>
 <script src="{root}site.js"></script>
@@ -313,6 +315,12 @@ privacy = (PAGES / "privacy.body.html").read_text()
      "dateModified": UPDATED, "publisher": PUBLISHER, "inLanguage": "en-US",
      "about": {"@type": "MobileApplication", "name": APP_NAME, "url": BASE}}]))
 
+terms = (PAGES / "terms.body.html").read_text()
+(ROOT / "terms.html").write_text(page("terms", f"Terms of Use · {NAME}", "Mapsheet's terms: a map viewer, maps from others provided as is, optional online features, and limits of liability.",
+                                      f'<div class="doc">\n{terms}</div>', schema=[
+    {"@context": "https://schema.org", "@type": "WebPage", "name": f"{NAME} terms of use", "url": f"{BASE}terms.html",
+     "dateModified": "2026-11-09", "publisher": PUBLISHER, "inLanguage": "en-US"}]))
+
 # French (for Quebec and New Brunswick crews): the home page and the privacy policy, under fr/. The guides stay in English.
 FR = ROOT / "fr"
 FR.mkdir(exist_ok=True)
@@ -333,13 +341,20 @@ privacy_fr = (PAGES / "privacy.body.fr.html").read_text()
     {"@context": "https://schema.org", "@type": "WebPage", "name": f"Politique de confidentialité de {NAME}", "url": f"{BASE}fr/confidentialite.html",
      "dateModified": UPDATED, "publisher": PUBLISHER, "inLanguage": "fr-CA", "about": {"@type": "MobileApplication", "name": APP_NAME, "url": BASE}}]))
 
+terms_fr = (PAGES / "terms.body.fr.html").read_text()
+(FR / "conditions.html").write_text(page("fr/terms", f"Conditions d'utilisation · {NAME}",
+                                         "Les conditions de Mapsheet : un visualiseur de cartes, des cartes de tiers fournies telles quelles, des fonctions en ligne facultatives et des limites de responsabilité.",
+                                         f'<div class="doc">\n{terms_fr}</div>', root="../", lang="fr", schema=[
+    {"@context": "https://schema.org", "@type": "WebPage", "name": f"Conditions d'utilisation de {NAME}", "url": f"{BASE}fr/conditions.html",
+     "dateModified": "2026-11-09", "publisher": PUBLISHER, "inLanguage": "fr-CA"}]))
+
 # 404 is served at any depth, so its links are absolute.
 missing = '<div class="doc"><h1>Page not found</h1><p>That page has moved or never existed.</p><p><a href="/mapsheet-site/">Go to Mapsheet\'s home page</a> or read <a href="/mapsheet-site/what-is-a-geospatial-pdf.html">what makes a PDF geospatial</a>.</p></div>'
 (ROOT / "404.html").write_text(page("404", f"Page not found · {NAME}", "This page could not be found.", missing, robots="noindex", root="/mapsheet-site/"))
 
 # Sitemap
 urls = ([(BASE, "1.0"), (f"{BASE}fr/", "0.9")] + [(f'{BASE}{g["slug"]}.html', "0.8") for g in guides]
-        + [(f"{BASE}privacy.html", "0.3"), (f"{BASE}fr/confidentialite.html", "0.3")])
+        + [(f"{BASE}privacy.html", "0.3"), (f"{BASE}fr/confidentialite.html", "0.3"), (f"{BASE}terms.html", "0.3"), (f"{BASE}fr/conditions.html", "0.3")])
 entries = "".join(f"  <url><loc>{u}</loc><lastmod>{UPDATED}</lastmod><priority>{p}</priority></url>\n" for u, p in urls)
 (ROOT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{entries}</urlset>\n')
 # robots.txt only counts at a host's root, so on github.io this copy is a pointer for tools that read it here; the sitemap
@@ -368,7 +383,7 @@ links = "\n".join(f'- [{g["h1"]}]({BASE}{g["slug"]}.md): {g["description"]}' for
 - [App Store listing]({APP}): {APP_NAME}, for iPhone and iPad, iOS 17 or later
 - [Home page]({BASE}): What Mapsheet does, plans, questions and support
 - [Privacy Policy]({BASE}privacy.html): No account, no server, no analytics; everything stays on the device
-- [Terms of Use]({TERMS}): Apple's standard license agreement
+- [Terms of Use]({BASE}terms.html): Mapsheet's terms (map data as is, optional online features, limits of liability), on top of Apple's standard license agreement ({TERMS})
 
 ## Optional
 

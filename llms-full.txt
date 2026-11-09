@@ -8,13 +8,14 @@ Mapsheet shows positions from your device's GPS. Check what a map shows against 
 
 - Free for up to 3 maps at a time (a multi-page atlas counts as one), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.
 - Mapsheet Field costs $59.99 a year (two weeks free for new subscribers) or $9.99 a month in the US: unlimited maps.
-- Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per device in the US: everything in Field plus crew packs (maps, points, tracks and photos sent as one file; the crew opens them free, keeping 3 maps at a time on the free plan or every map with Field), GPS averaging over 30 seconds with the standard error, and shapefile export.
+- Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per person in the US (organizations can buy seats through Apple Business Manager): everything in Field plus crew packs (maps, points, tracks and photos sent as one file; the crew opens them free, keeping 3 maps at a time on the free plan or every map with Field), GPS averaging over 30 seconds with the standard error, and shapefile export.
 - Maps never lock: if a plan ends, the user keeps every map and everything on it and only can't add maps past three.
 - Opens geospatial PDFs from ArcGIS, QGIS, Global Mapper, the USGS and NRCan (both the ISO 32000 geospatial encoding and the OGC/TerraGo LGIDict encoding, including GeoPDF files, multi-page atlases and rotated pages), GeoTIFFs and TIFFs zipped with their world file, and zipped downloads.
 - Coordinates: decimal degrees, degrees and minutes, degrees-minutes-seconds, UTM and MGRS/USNG, shown and typed. Understands UTM on common datums, Canada's provincial systems (MTM, Quebec and Ontario Lambert, BC Albers, Alberta 10TM), Australia's MGA zones, and any projection a map defines itself (WKT or GeoTIFF keys).
 - Field tools: GPS position with accuracy and heading in airplane mode; Bluetooth GNSS receivers that provide location to iOS; points with symbols, colours, notes and photos; tracks that keep recording with the screen locked; lines and areas in metric or imperial units with draggable corners; distance and bearing to any point.
 - Exports GPX, KML, KMZ and CSV (with UTM columns) on every plan, shapefiles on Crew; imports GPX, KML, KMZ, CSV and zipped shapefiles.
 - Privacy: no account, no server and no analytics. Maps, points, tracks, photos and location stay on the device. App Store privacy label: Data Not Collected.
+- Coming in version 1.1: adding maps from a link or a QR code (incident teams' map folders on the national fire file share, direct PDF/GeoTIFF links, Avenza-style map lists, link pages), a free map list (USGS US Topo and historical topos, Forest Service FSTopo, NRCan, NSW, Queensland, LINZ Topo50; each map downloads from its publisher), offline aerial and topo map downloads (USGS for the US, LINZ imagery for New Zealand), and Crew seats bought by organizations through Apple Business Manager. These online features are optional: the core app never needs a connection.
 - Runs on iPhone and iPad with iOS 17 or later, in English and French (Canada). Launched on the App Store in November 2026. The home page and privacy policy are also in French: https://coderalert0.github.io/mapsheet-site/fr/
 
 ## Questions and answers
@@ -25,7 +26,15 @@ Geospatial PDFs (including GeoPDF® files) and GeoTIFFs, also inside a zip. A pl
 
 ### Do I need a cell signal or Wi-Fi?
 
-No. Your maps are stored on your iPhone or iPad, and GPS works anywhere with a view of the sky, in airplane mode too.
+No. Your maps are stored on your iPhone or iPad, and GPS works anywhere with a view of the sky, in airplane mode too. You only need a connection to download a map.
+
+### Where do the free maps come from?
+
+From the agencies that publish them: the U.S. Geological Survey, the USDA Forest Service, Natural Resources Canada, NSW Spatial Services, the Queensland Government and Land Information New Zealand. Mapsheet lists them (coming in version 1.1); each map downloads straight from its publisher, as they publish it.
+
+### Can my company buy Crew for the whole crew?
+
+Yes. Organizations can buy Mapsheet Crew seats through Apple Business Manager and assign them to their people, or each person can subscribe in the app.
 
 ### Can I use Mapsheet for work?
 
@@ -33,7 +42,7 @@ Yes, on every plan, including the free one. There's no separate professional lic
 
 ### Is Mapsheet free?
 
-Yes, for up to 3 maps at a time with every field tool. Mapsheet Field ($59.99 a year or $9.99 a month in the US) adds unlimited maps; Mapsheet Crew ($129.99 a year or $19.99 a month per device) adds crew packs, GPS averaging and shapefile export. The yearly plans start with two weeks free.
+Yes, for up to 3 maps at a time with every field tool. Mapsheet Field ($59.99 a year or $9.99 a month in the US) adds unlimited maps; Mapsheet Crew ($129.99 a year or $19.99 a month per person) adds crew packs, GPS averaging and shapefile export. The yearly plans start with two weeks free.
 
 ### What happens to my maps if my plan ends?
 
@@ -364,8 +373,8 @@ It depends on the receiver and on corrections. The centimeter-level results abov
 
 Source page: https://coderalert0.github.io/mapsheet-site/privacy.html
 
-Effective November 8, 2026.
-Mapsheet is built so your work stays yours. It has no account, no server and no analytics.
+Effective November 9, 2026.
+Mapsheet is built so your work stays yours. It has no account and no analytics, and nothing about you is ever sent anywhere.
 
 ## What stays on your device
 Your maps, the points, tracks, lines, areas and photos you add, and your position are stored only on your iPhone or iPad (and in your device backups). Mapsheet does not send them anywhere.
@@ -375,6 +384,13 @@ Mapsheet uses your location to show where you are on your maps and to record tra
 
 ## Camera and photos
 If you attach photos to points, they are saved with your map on your device.
+
+## Optional online features
+Mapsheet goes online only when you ask it to download something:
+- A link or QR code you open: the app fetches that page or file from the site it points to (for example the national fire file share).
+- Free maps: the app asks Mapsheet's server for the list of maps in the area you're looking at (by 1° grid square), then downloads the map you pick straight from its publisher (for example USGS or the Forest Service). If Mapsheet's server is unavailable, it may ask USGS's own map service instead.
+- Aerial and topo maps: the app downloads map tiles for the area you choose from the publisher's public tile service (USGS), or asks Mapsheet's server to cut a map of that area (New Zealand imagery from LINZ).
+Like any internet connection, the servers involved see your device's IP address. Mapsheet's server keeps no access logs; it stores nothing about you, only the map areas it's asked to build, for up to 48 hours so the map can be delivered. Publishers' own servers are covered by their own privacy policies. No account, identifier, contact detail or precise position is sent. Scanning a QR code happens on the device.
 
 ## Sharing
 When you export features or send a crew pack, you choose where the file goes (AirDrop, Messages, Mail, Files…). Mapsheet only creates the file.

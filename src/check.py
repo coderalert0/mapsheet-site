@@ -76,7 +76,7 @@ for path in pages:
         errors.append(f"{p.name}: title is {len(p.title)} characters")
     if not p.desc or not 25 <= len(p.desc) <= 175:
         errors.append(f"{p.name}: description is {len(p.desc or '')} characters")
-    if "stdeula" not in text or ("privacy.html" not in text and "confidentialite.html" not in text):
+    if ("stdeula" not in text and "terms.html" not in text and "conditions.html" not in text) or ("privacy.html" not in text and "confidentialite.html" not in text):
         errors.append(f"{p.name}: missing the Terms of Use or Privacy Policy link")
     for block in p.ld:
         try:
@@ -104,7 +104,7 @@ for path in pages:
             errors.append(f"{p.name}: hreflang points at a missing page {alt}")
 
 # The app and App Store Connect link to these, so they must keep working.
-for required in ("index.html", "privacy.html", "fr/confidentialite.html", "robots.txt", "llms.txt", "llms-full.txt", "sitemap.xml", "img/og.png", "img/icon-512.png", ".nojekyll", "site.js"):
+for required in ("index.html", "privacy.html", "fr/confidentialite.html", "terms.html", "fr/conditions.html", "robots.txt", "llms.txt", "llms-full.txt", "sitemap.xml", "img/og.png", "img/icon-512.png", ".nojekyll", "site.js"):
     if not (ROOT / required).exists():
         errors.append(f"missing {required}")
 if '<span class="email">' not in (ROOT / "privacy.html").read_text() or 'id="support"' not in (ROOT / "index.html").read_text():
