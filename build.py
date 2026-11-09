@@ -41,13 +41,16 @@ T = {
          ("Points, tracks, areas","Points with notes and photos, tracks that keep recording with the phone locked, lines and areas measured in metres, hectares or acres."),
          ("Walk to a point","Distance and bearing from you to any point — a plot centre, a cache, a block corner."),
          ("Coordinates crews use","Lat/lon, degrees-minutes, UTM and MGRS/USNG — shown and typed. Canada's provincial systems built in: BC Albers, Alberta 10TM, MTM, Quebec Lambert."),
-         ("Crew packs","A crew lead sends several maps, points and photos in one file by AirDrop or message. The crew opens it free; new points merge with theirs.")],
-  shotsH="See it", shots=[("map","Your position on a USGS topo"),("point","Distance and bearing to a point"),("measure","Measure a line or an area"),("goto","Go to a UTM or MGRS coordinate")],
+         ("Crew packs","A crew lead sends several maps, points and photos in one file by AirDrop or message. The crew opens it free; new points merge with theirs."),
+         ("Fix it in the field","Drag a corner of an area or line to move it, tap to add one, press and hold to remove one. Mark points with symbols: plots, caches, hazards, landings."),
+         ("Precise points","Average your GPS position over half a minute for a plot centre or a corner, with the standard error shown (Crew)."),
+         ("Into ArcGIS and QGIS","Export GPX, KML, KMZ and CSV with UTM columns on every plan; shapefiles on Crew. Import GPX, KML and shapefiles back.")],
+  shotsH="See it", shots=[("map","Your position on a USGS topo"),("point","Distance and bearing to a point"),("edit","Measure and edit an area"),("features","Points, tracks and areas")],
   plansH="Plans",
-  plans=[("Free","$0",["Up to 3 maps","GPS, points, tracks, measuring","GPX, KML and CSV export"]),
+  plans=[("Free","$0",["3 maps at a time — an atlas counts once","Every field tool: GPS, points with symbols and photos, tracks, measuring, shape editing","GPX, KML and CSV export","Work use allowed"]),
          ("Field","$59.99 / year",["Unlimited maps","Work use included — no separate pro licence","Or $9.99 / month for seasonal work"]),
-         ("Crew","$129.99 / year per device",["Everything in Field","Send maps to your crew as crew packs","Your crew opens packs free"])],
-  plansNote="US prices; local prices in other countries. New subscribers get two weeks free on yearly plans.",
+         ("Crew","$129.99 / year per device",["Everything in Field","Send maps to your crew as crew packs — they open them free","GPS averaging for precise points","Shapefile export","Or $19.99 / month per device"])],
+  plansNote="<b>Your maps never lock.</b> If a plan ends you keep every map; you just can't add more past three. US prices; local prices in other countries. Two weeks free on yearly plans for new subscribers.",
   faqH="Questions and support",
   faq=[("Which maps work?","Geospatial PDFs (including GeoPDF® files) and GeoTIFFs, also inside a zip. A plain PDF without map coordinates can't show your position."),
        ("Do I need a signal?","No. Maps live on your phone and GPS works anywhere with a view of the sky."),
@@ -86,13 +89,16 @@ T = {
          ("Points, traces, surfaces","Points avec notes et photos, traces qui continuent avec l'écran verrouillé, lignes et surfaces mesurées en mètres, hectares ou acres."),
          ("Marcher vers un point","Distance et azimut entre vous et n'importe quel point — un centre de parcelle, une cache, un coin de bloc."),
          ("Les coordonnées des équipes","Lat/long, degrés-minutes, UTM et MGRS/USNG — affichées et saisies. Systèmes provinciaux intégrés : Albers C.-B., 10TM Alberta, MTM, Lambert Québec."),
-         ("Paquets d'équipe","Le chef d'équipe envoie plusieurs cartes, points et photos en un seul fichier par AirDrop ou message. L'équipe l'ouvre gratuitement; les nouveaux points s'ajoutent aux siens.")],
-  shotsH="Aperçu", shots=[("french","En français, en mètres"),("point","Distance et azimut vers un point"),("measure","Mesurer une ligne ou une surface"),("goto","Aller à une coordonnée UTM ou MGRS")],
+         ("Paquets d'équipe","Le chef d'équipe envoie plusieurs cartes, points et photos en un seul fichier par AirDrop ou message. L'équipe l'ouvre gratuitement; les nouveaux points s'ajoutent aux siens."),
+         ("Corrigez sur le terrain","Faites glisser un coin d'une surface ou d'une ligne pour le déplacer, touchez pour en ajouter un, maintenez pour le retirer. Des symboles pour vos points : parcelles, caches, dangers, jetées."),
+         ("Points précis","Faites la moyenne de votre position GPS sur une demi-minute pour un centre de parcelle ou un coin, avec l'erreur type affichée (Équipe)."),
+         ("Vers ArcGIS et QGIS","Exportez en GPX, KML, KMZ et CSV avec colonnes UTM avec tous les forfaits; en shapefile avec Équipe. Importez GPX, KML et shapefiles.")],
+  shotsH="Aperçu", shots=[("fr-map","Votre position sur une carte topo"),("fr-point","Distance et azimut vers un point"),("fr-edit","Mesurer et modifier une surface"),("fr-features","Points, traces et surfaces")],
   plansH="Forfaits",
-  plans=[("Gratuit","0 $",["Jusqu'à 3 cartes","GPS, points, traces, mesures","Exportation GPX, KML et CSV"]),
+  plans=[("Gratuit","0 $",["3 cartes à la fois — un atlas compte pour une","Tous les outils de terrain : GPS, points avec symboles et photos, traces, mesures, modification des formes","Exportation GPX, KML et CSV","Usage professionnel permis"]),
          ("Terrain","59,99 $ US / an",["Cartes illimitées","Usage professionnel inclus — sans licence pro à part","Ou 9,99 $ US / mois pour le travail saisonnier"]),
-         ("Équipe","129,99 $ US / an par appareil",["Tout ce qu'offre Terrain","Envoyez des cartes à votre équipe en paquets","Votre équipe ouvre les paquets gratuitement"])],
-  plansNote="Prix américains; l'App Store affiche le prix en dollars canadiens. Deux semaines gratuites sur les forfaits annuels pour les nouveaux abonnés.",
+         ("Équipe","129,99 $ US / an par appareil",["Tout ce qu'offre Terrain","Envoyez des cartes à votre équipe en paquets — ouverts gratuitement","Moyenne GPS pour des points précis","Exportation en shapefile","Ou 19,99 $ US / mois par appareil"])],
+  plansNote="<b>Vos cartes ne se verrouillent jamais.</b> Si un forfait prend fin, vous gardez toutes vos cartes; vous ne pouvez simplement plus en ajouter au-delà de trois. Prix américains; l'App Store affiche le prix en dollars canadiens. Deux semaines gratuites sur les forfaits annuels pour les nouveaux abonnés.",
   faqH="Questions et aide",
   faq=[("Quelles cartes fonctionnent?","Les PDF géoréférencés (y compris les fichiers GeoPDF®) et les GeoTIFF, aussi dans un zip. Un simple PDF sans coordonnées ne peut pas afficher votre position."),
        ("Faut-il du réseau?","Non. Les cartes sont sur votre téléphone et le GPS fonctionne partout où le ciel est visible."),
@@ -136,7 +142,7 @@ for key, t in T.items():
     plans = "".join(f"<div class='card plan'><h3>{n}</h3><div class='price'>{p}</div><ul>{''.join(f'<li>{x}</li>' for x in items)}</ul></div>" for n, p, items in t["plans"])
     faq = "".join(f"<details><summary>{q}</summary><p>{a.format(privacy=t['privacyFile'])}</p></details>" for q, a in t["faq"])
     facts = "".join(f"<span>{f}</span>" for f in t["facts"])
-    hero_img = "map" if key == "en" else "french"
+    hero_img = "map" if key == "en" else "fr-map"
     body = f"""<div class="hero"><div><h1>{t['h1']}</h1><p class="lead">{t['lead']}</p><span class="badge">{t['soon']}</span><div class="facts">{facts}</div></div>
 <img class="phone" src="{r}img/{hero_img}.jpg" alt=""></div>
 <section id="features"><h2>{t['featH']}</h2><div class="grid">{feats}</div></section>
