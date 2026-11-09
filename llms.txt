@@ -28,7 +28,7 @@ Mapsheet shows positions from your device's GPS. Check what a map shows against 
 
 ## App
 
-- [App Store listing](https://apps.apple.com/us/app/id6832417568): Mapsheet: Offline PDF Maps GPS, for iPhone and iPad, iOS 17 or later
+- [App Store listing](https://apps.apple.com/us/app/id6832417568): Topo Maps & PDF Maps: Mapsheet, for iPhone and iPad, iOS 17 or later
 - [Home page](https://coderalert0.github.io/mapsheet-site/): What Mapsheet does, plans, questions and support
 - [Privacy Policy](https://coderalert0.github.io/mapsheet-site/privacy.html): No account, no server, no analytics; everything stays on the device
 - [Terms of Use](https://coderalert0.github.io/mapsheet-site/terms.html): Mapsheet's terms (map data as is, optional online features, limits of liability), on top of Apple's standard license agreement (https://www.apple.com/legal/internet-services/itunes/dev/stdeula/)

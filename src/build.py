@@ -24,7 +24,7 @@ APP_ID = "6832417568"
 APP = f"https://apps.apple.com/us/app/id{APP_ID}"
 APP_FR = f"https://apps.apple.com/ca/app/id{APP_ID}?l=fr-CA"   # the Canadian store, in French
 NAME = "Mapsheet"
-APP_NAME = "Mapsheet: Offline PDF Maps GPS"
+APP_NAME = "Topo Maps & PDF Maps: Mapsheet"
 TERMS = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
 UPDATED = "2026-11-08"
 UPDATED_LONG = date.fromisoformat(UPDATED).strftime("%B %-d, %Y")
