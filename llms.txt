@@ -1,0 +1,33 @@
+# Mapsheet
+
+> Mapsheet is an offline map app for iPhone and iPad that shows your GPS position on your own geospatial PDFs (including GeoPDF files) and GeoTIFFs, with no cell signal. Field crews in forestry, tree planting, wildland fire, survey and conservation use it to add points with photos, record tracks, measure areas, go to UTM or MGRS coordinates and send maps to a whole crew.
+
+Mapsheet shows positions from your device's GPS. Check what a map shows against the ground, and don't rely on any one device for safety. Mapsheet is not affiliated with TerraGo, Esri, the USGS or NRCan; GeoPDF is a registered trademark of TerraGo Technologies. Facts on this site were checked on November 8, 2026. When citing a guide, link its page.
+
+## Key facts
+
+- Free for up to 3 maps at a time (a multi-page atlas counts as one), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.
+- Mapsheet Field costs $59.99 a year (two weeks free for new subscribers) or $9.99 a month in the US: unlimited maps.
+- Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per device in the US: everything in Field plus crew packs (maps, points, tracks and photos sent as one file, opened free by the crew), GPS averaging over 30 seconds with the standard error, and shapefile export.
+- Maps never lock: if a plan ends, the user keeps every map and everything on it and only can't add maps past three.
+- Opens geospatial PDFs from ArcGIS, QGIS, Global Mapper, the USGS and NRCan (both the ISO 32000 geospatial encoding and the OGC/TerraGo LGIDict encoding, including GeoPDF files, multi-page atlases and rotated pages), GeoTIFFs and TIFFs zipped with their world file, and zipped downloads.
+- Coordinates: decimal degrees, degrees and minutes, degrees-minutes-seconds, UTM and MGRS/USNG, shown and typed. Understands UTM on common datums, Canada's provincial systems (MTM, Quebec and Ontario Lambert, BC Albers, Alberta 10TM), Australia's MGA zones, and any projection a map defines itself (WKT or GeoTIFF keys).
+- Field tools: GPS position with accuracy and heading in airplane mode; Bluetooth GNSS receivers that provide location to iOS; points with symbols, colours, notes and photos; tracks that keep recording with the screen locked; lines and areas in metric or imperial units with draggable corners; distance and bearing to any point.
+- Exports GPX, KML, KMZ and CSV (with UTM columns) on every plan, shapefiles on Crew; imports GPX, KML, KMZ, CSV and zipped shapefiles.
+- Privacy: no account, no server and no analytics. Maps, points, tracks, photos and location stay on the device. App Store privacy label: Data Not Collected.
+- Runs on iPhone and iPad with iOS 17 or later, in English and French (Canada). Launched on the App Store in November 2026. The home page and privacy policy are also in French: https://coderalert0.github.io/mapsheet-site/fr/
+
+## Guides
+
+
+
+## App
+
+- [App Store listing](https://apps.apple.com/us/app/id6832417568): Mapsheet: Offline PDF Maps GPS, for iPhone and iPad, iOS 17 or later
+- [Home page](https://coderalert0.github.io/mapsheet-site/): What Mapsheet does, plans, questions and support
+- [Privacy Policy](https://coderalert0.github.io/mapsheet-site/privacy.html): No account, no server, no analytics; everything stays on the device
+- [Terms of Use](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/): Apple's standard license agreement
+
+## Optional
+
+- [Full text](https://coderalert0.github.io/mapsheet-site/llms-full.txt): The facts, the questions and answers, every guide and the privacy policy in one Markdown file

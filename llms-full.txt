@@ -1,0 +1,79 @@
+# Mapsheet
+
+> Mapsheet is an offline map app for iPhone and iPad that shows your GPS position on your own geospatial PDFs (including GeoPDF files) and GeoTIFFs, with no cell signal. Field crews in forestry, tree planting, wildland fire, survey and conservation use it to add points with photos, record tracks, measure areas, go to UTM or MGRS coordinates and send maps to a whole crew.
+
+Mapsheet shows positions from your device's GPS. Check what a map shows against the ground, and don't rely on any one device for safety. Mapsheet is not affiliated with TerraGo, Esri, the USGS or NRCan; GeoPDF is a registered trademark of TerraGo Technologies. Checked on November 8, 2026. Source: https://coderalert0.github.io/mapsheet-site/
+
+## Key facts
+
+- Free for up to 3 maps at a time (a multi-page atlas counts as one), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.
+- Mapsheet Field costs $59.99 a year (two weeks free for new subscribers) or $9.99 a month in the US: unlimited maps.
+- Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per device in the US: everything in Field plus crew packs (maps, points, tracks and photos sent as one file, opened free by the crew), GPS averaging over 30 seconds with the standard error, and shapefile export.
+- Maps never lock: if a plan ends, the user keeps every map and everything on it and only can't add maps past three.
+- Opens geospatial PDFs from ArcGIS, QGIS, Global Mapper, the USGS and NRCan (both the ISO 32000 geospatial encoding and the OGC/TerraGo LGIDict encoding, including GeoPDF files, multi-page atlases and rotated pages), GeoTIFFs and TIFFs zipped with their world file, and zipped downloads.
+- Coordinates: decimal degrees, degrees and minutes, degrees-minutes-seconds, UTM and MGRS/USNG, shown and typed. Understands UTM on common datums, Canada's provincial systems (MTM, Quebec and Ontario Lambert, BC Albers, Alberta 10TM), Australia's MGA zones, and any projection a map defines itself (WKT or GeoTIFF keys).
+- Field tools: GPS position with accuracy and heading in airplane mode; Bluetooth GNSS receivers that provide location to iOS; points with symbols, colours, notes and photos; tracks that keep recording with the screen locked; lines and areas in metric or imperial units with draggable corners; distance and bearing to any point.
+- Exports GPX, KML, KMZ and CSV (with UTM columns) on every plan, shapefiles on Crew; imports GPX, KML, KMZ, CSV and zipped shapefiles.
+- Privacy: no account, no server and no analytics. Maps, points, tracks, photos and location stay on the device. App Store privacy label: Data Not Collected.
+- Runs on iPhone and iPad with iOS 17 or later, in English and French (Canada). Launched on the App Store in November 2026. The home page and privacy policy are also in French: https://coderalert0.github.io/mapsheet-site/fr/
+
+## Questions and answers
+
+### Which maps work in Mapsheet?
+
+Geospatial PDFs (including GeoPDF® files) and GeoTIFFs, also inside a zip. A plain PDF without map coordinates can't show your position: export it from your GIS with georeferencing turned on.
+
+### Do I need a cell signal or Wi-Fi?
+
+No. Your maps are stored on your iPhone or iPad, and GPS works anywhere with a view of the sky, in airplane mode too.
+
+### Can I use Mapsheet for work?
+
+Yes, on every plan, including the free one. There's no separate professional licence.
+
+### Is Mapsheet free?
+
+Yes, for up to 3 maps at a time with every field tool. Mapsheet Field ($59.99 a year or $9.99 a month in the US) adds unlimited maps; Mapsheet Crew ($129.99 a year or $19.99 a month per device) adds crew packs, GPS averaging and shapefile export. The yearly plans start with two weeks free.
+
+### What happens to my maps if my plan ends?
+
+Nothing: you keep every map, point, track and photo. You just can't add maps past the free three until you subscribe again.
+
+### How do I get maps onto my phone?
+
+Share the file to Mapsheet from Mail, Files, Drive or AirDrop, or tap + in the map list. A crew lead can send several maps at once as a crew pack.
+
+### Which devices does it run on?
+
+iPhone and iPad with iOS 17 or later.
+
+### Is my data shared?
+
+No. Maps, points, tracks, photos and your position stay on your device. There's no account and no server. See the privacy policy.
+
+---
+
+# Mapsheet privacy policy
+
+Source page: https://coderalert0.github.io/mapsheet-site/privacy.html
+
+Effective November 8, 2026.
+Mapsheet is built so your work stays yours. It has no account, no server and no analytics.
+
+## What stays on your device
+Your maps, the points, tracks, lines, areas and photos you add, and your position are stored only on your iPhone or iPad (and in your device backups). Mapsheet does not send them anywhere.
+
+## Location
+Mapsheet uses your location to show where you are on your maps and to record tracks you start, including while the phone is locked if a track is recording. Your location never leaves your device.
+
+## Camera and photos
+If you attach photos to points, they are saved with your map on your device.
+
+## Sharing
+When you export features or send a crew pack, you choose where the file goes (AirDrop, Messages, Mail, Files…). Mapsheet only creates the file.
+
+## Purchases
+Subscriptions are handled by Apple. Mapsheet receives only whether a subscription is active, never your payment details.
+
+## Contact
+laddothis@gmail.com
