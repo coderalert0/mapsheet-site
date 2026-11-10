@@ -285,7 +285,7 @@ for g in guides:
 cards = "".join(f'<li><a href="{g["slug"]}.html"><strong>{html.escape(g["h1"])}</strong><span>{html.escape(g["description"])}</span></a></li>' for g in guides)
 home = (PAGES / "home.html").read_text().replace("{APP}", APP).replace("{GUIDES}", f'<ul class="guides">{cards}</ul>')
 faqs = re.findall(r"<details><summary>(.+?)</summary><p>(.+?)</p></details>", home)
-SHOTS = ["map", "fires", "freemaps", "crewnearby"]
+SHOTS = ["map", "fires", "freemaps", "crewnearby", "ready"]
 home_schema = [
     {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": BASE, "description": HOME_DESCRIPTION, "publisher": PUBLISHER, "inLanguage": "en-US"},
     {"@context": "https://schema.org", "@type": "MobileApplication", "name": APP_NAME, "alternateName": NAME, "url": BASE,
@@ -295,7 +295,9 @@ home_schema = [
      "featureList": ["GPS position on geospatial PDFs and GeoTIFFs, offline", "Points with symbols, notes and photos",
                      "Track recording with the screen locked", "Line and area measuring with editable corners",
                      "Distance and bearing to a point", "UTM, MGRS/USNG and lat/lon coordinates",
-                     "GPX, KML, KMZ and CSV export and import", "Crew packs (Crew)", "GPS averaging (Crew)", "Shapefile export (Crew)"],
+                     "GPX, KML, KMZ and CSV export and import", "Crew packs (Crew)", "GPS averaging (Crew)", "Shapefile export (Crew)",
+                     "Ready for no signal: per-area offline check", "Lock Screen recording with a Stop button", "Siri and Action button shortcuts",
+                     "Elevation profiles of tracks and lines", "Custom fields on points", "UTM grid with MGRS labels"],
      "inLanguage": ["en", "fr-CA"], "publisher": PUBLISHER,
      "offers": [{"@type": "Offer", "name": "Mapsheet (free, 3 maps at a time)", "price": "0", "priceCurrency": "USD"},
                 {"@type": "Offer", "name": "Mapsheet Field, yearly", "price": "59.99", "priceCurrency": "USD"},
