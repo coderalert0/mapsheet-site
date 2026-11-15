@@ -42,7 +42,7 @@ Yes: Crew nearby connects phones over Wi-Fi and Bluetooth, with no internet or s
 
 ### Can my company buy Crew for the whole crew?
 
-Yes. Organizations can buy Mapsheet Crew seats through Apple Business Manager and assign them to their people, or each person can subscribe in the app.
+Yes. Organizations can buy Mapsheet Crew seats through Apple Business Manager and assign them to their people, or each person can subscribe in the app. Crew members don't need a plan for the lead's maps: maps in a crew pack from a lead with Crew don't count toward their 3 free maps.
 
 ### Can I use Mapsheet for work?
 
@@ -50,7 +50,7 @@ Yes, on every plan, including the free one. There's no separate professional lic
 
 ### Is Mapsheet free?
 
-Yes, for up to 3 maps at a time with every field tool, and incident maps from the national fire file share never count toward the 3. Mapsheet Field ($59.99 a year or $9.99 a month in the US) adds unlimited maps; Mapsheet Crew ($129.99 a year or $19.99 a month per person) adds crew packs, GPS averaging and shapefile export. The yearly plans start with two weeks free.
+Yes, for up to 3 maps at a time with every field tool, and incident maps from the national fire file share and maps in a Crew lead's crew pack never count toward the 3. Mapsheet Field ($59.99 a year or $9.99 a month in the US) adds unlimited maps; Mapsheet Crew ($129.99 a year or $19.99 a month per person) adds crew packs, GPS averaging and shapefile export. The yearly plans start with two weeks free.
 
 ### What happens to my maps if my plan ends?
 
@@ -424,7 +424,7 @@ In Mapsheet, **+ › From a link or QR code** opens an incident's folder and lis
 
 Source page: https://coderalert0.github.io/mapsheet-site/privacy.html
 
-Effective November 9, 2026.
+Effective November 15, 2026.
 Mapsheet is built so your work stays yours. It has no account and no analytics, and nothing about you is ever sent anywhere.
 
 ## What stays on your device
@@ -451,7 +451,7 @@ Offline mode (Settings) stops all of these: with it on, Mapsheet never uses the 
 When you start or join a crew, your phone connects directly to the other crew phones within range, over Wi-Fi and Bluetooth (Apple's peer-to-peer networking, encrypted). No internet or server is involved, and nothing reaches Mapsheet. While you're in a crew, and only when you leave those switches on, the crew sees the name you enter, your position (about every five seconds) and the points, lines, areas and tracks you add or change. Photos are never shared. Nearby phones that aren't in your crew can see that a Mapsheet crew is around, but not its code, names or positions. The crew's points stay on your device until you clear them; positions are forgotten when you leave. iOS asks for Local Network permission the first time you use it.
 
 ## Sharing
-When you export features or send a crew pack, you choose where the file goes (AirDrop, Messages, Mail, Files…). Mapsheet only creates the file.
+When you export features or send a crew pack, you choose where the file goes (AirDrop, Messages, Mail, Files…). Mapsheet only creates the file. A crew pack from someone with Mapsheet Crew also carries Apple's signed record of that Crew purchase (product, dates, transaction number, store country and price; no name, email or Apple Account) and a key made on their phone, so the crew's phones can check that the lead's maps don't count toward their free plan. It goes only where the lead sends the pack; nothing reaches us.
 
 ## Purchases
 Subscriptions are handled by Apple. Mapsheet receives only whether a subscription is active, never your payment details.
