@@ -4,6 +4,7 @@ description: How to put a national forest's Motor Vehicle Use Map on your phone 
 h1: How do I get a Forest Service motor vehicle use map on my phone, offline?
 nav: Forest Service MVUM on your phone
 answer: Download your forest's Motor Vehicle Use Map (MVUM) as a PDF from the forest's own website while you have a connection, then open it in an app that reads geospatial PDFs. Your GPS position then shows on the map with no cell signal. Since November 2026 many Forest Service pages say some updated maps "may no longer be available through Avenza" and suggest searching your app store for a GeoPDF or offline PDF map app instead.
+updated: 2026-11-20
 related: what-is-a-geospatial-pdf, phone-gps-accuracy-in-the-field, switching-from-avenza-maps
 ---
 ## What a Motor Vehicle Use Map is

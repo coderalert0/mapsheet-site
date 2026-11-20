@@ -3,7 +3,7 @@
 > Download your forest's Motor Vehicle Use Map (MVUM) as a PDF from the forest's own website while you have a connection, then open it in an app that reads geospatial PDFs. Your GPS position then shows on the map with no cell signal. Since November 2026 many Forest Service pages say some updated maps "may no longer be available through Avenza" and suggest searching your app store for a GeoPDF or offline PDF map app instead.
 
 Source page: https://coderalert0.github.io/mapsheet-site/forest-service-mvum-on-your-phone.html
-Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+Checked against its sources on November 20, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
 
 ## What a Motor Vehicle Use Map is
 

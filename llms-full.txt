@@ -6,7 +6,8 @@ Mapsheet shows positions from your device's GPS. Check what a map shows against 
 
 ## Key facts
 
-- Free for up to 3 maps at a time (a multi-page atlas counts as one), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.
+- Free for up to 3 maps at a time (a multi-page atlas counts as one; the bundled sample map doesn't count), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.
+- Support: Settings › Email support, or "Email it to us" when a file can't be added, writes to laddothis@gmail.com; Settings also has Rate Mapsheet and Share Mapsheet.
 - Mapsheet Field costs $59.99 a year (two weeks free for new subscribers) or $9.99 a month in the US: unlimited maps.
 - Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per person in the US (organizations can buy seats through Apple Business Manager): everything in Field plus crew packs (maps, points, tracks and photos sent as one file; the crew opens them free, keeping 3 maps at a time on the free plan or every map with Field), GPS averaging over 30 seconds with the standard error, and shapefile export.
 - Maps never lock: if a plan ends, the user keeps every map and everything on it and only can't add maps past three.
@@ -15,7 +16,7 @@ Mapsheet shows positions from your device's GPS. Check what a map shows against 
 - Field tools: GPS position with accuracy and heading in airplane mode; Bluetooth GNSS receivers that provide location to iOS; points with symbols, colours, notes and photos; tracks that keep recording with the screen locked; lines and areas in metric or imperial units with draggable corners; distance and bearing to any point.
 - Exports GPX, KML, KMZ and CSV (with UTM columns) on every plan, shapefiles on Crew; imports GPX, KML, KMZ, CSV and zipped shapefiles.
 - Privacy: no account, no server and no analytics. Maps, points, tracks, photos and location stay on the device. App Store privacy label: Data Not Collected.
-- Also in the app: adding maps from a link or a QR code (incident teams' map folders on the national fire file share, direct PDF/GeoTIFF links, Avenza-style map lists, link pages), a free map list (USGS US Topo and historical topos, Forest Service FSTopo, NRCan, NSW, Queensland, LINZ Topo50; each map downloads from its publisher), offline aerial and topo map downloads (USGS for the US, LINZ imagery for New Zealand), Crew seats bought by organizations through Apple Business Manager, an offline fire overlay (current perimeters, incidents and NASA satellite hotspots for the US, Canada, Australia and New Zealand, free on every plan, each with its age and source; US fires link to their incident's map folder on the public NIFC File Share), Crew nearby (phones share positions and points over Wi-Fi/Bluetooth with no internet or server; a lead on Crew starts it, anyone joins with a code), exporting a map with your features as a geospatial PDF (Field and Crew), an offline mode that blocks all internet use, a whole-library backup file to move maps to a new device, sending maps as plain files (original PDF plus KML) to people without Mapsheet, and a Settings line showing exactly when a plan renews or a trial turns into a charge, with a reminder two days before. The online features are optional: the core app never needs a connection.
+- Also in the app: adding maps from a link or a QR code (incident teams' map folders on the national fire file share, direct PDF/GeoTIFF links, Avenza-style map lists, link pages), a free map list for where you are or any place you search with Apple's place search (USGS US Topo and historical topos, Forest Service FSTopo and motor vehicle use maps, NRCan, NSW, Queensland, LINZ Topo50; each map shows its distance and direction and downloads from its publisher), offline aerial and topo map downloads for an area around you or any place (USGS for the US, LINZ imagery for New Zealand), Crew seats bought by organizations through Apple Business Manager, an offline fire overlay (current perimeters, incidents and NASA satellite hotspots for the US, Canada, Australia and New Zealand, free on every plan, each with its age and source; US fires link to their incident's map folder on the public NIFC File Share), Crew nearby (phones share positions and points over Wi-Fi/Bluetooth with no internet or server; a lead on Crew starts it, anyone joins with a code), exporting a map with your features as a geospatial PDF (Field and Crew), an offline mode that blocks all internet use, a whole-library backup file to move maps to a new device, sending maps as plain files (original PDF plus KML) to people without Mapsheet, and a Settings line showing exactly when a plan renews or a trial turns into a charge, with a reminder two days before. The online features are optional: the core app never needs a connection.
 - Runs on iPhone and iPad with iOS 17 or later, in English and French (Canada). Launched on the App Store in November 2026. The home page and privacy policy are also in French: https://coderalert0.github.io/mapsheet-site/fr/
 
 ## Questions and answers
@@ -56,9 +57,13 @@ Yes, for up to 3 maps at a time with every field tool, and incident maps from th
 
 Nothing: you keep every map, point, track and photo. You just can't add maps past the free three until you subscribe again.
 
+### Can I get maps for a place I'm not at yet?
+
+Yes. Tap Find free maps (or + › Free maps for a place) and search a town, peak, park or national forest: Mapsheet lists the free maps there, from USGS topos to Forest Service motor vehicle use maps, to download before you go. Aerial and topo downloads work the same way.
+
 ### How do I get maps onto my phone?
 
-Share the file to Mapsheet from Mail, Files, Drive or AirDrop, or tap + in the map list. A crew lead can send several maps at once as a crew pack.
+Share the file to Mapsheet from Mail, Files, Drive or AirDrop, tap Find free maps, or tap + in the map list. A crew lead can send several maps at once as a crew pack.
 
 ### Which devices does it run on?
 
@@ -150,7 +155,7 @@ Yes, with a GIS. The QGIS Georeferencer aligns "unreferenced raster or vector la
 > Download your forest's Motor Vehicle Use Map (MVUM) as a PDF from the forest's own website while you have a connection, then open it in an app that reads geospatial PDFs. Your GPS position then shows on the map with no cell signal. Since November 2026 many Forest Service pages say some updated maps "may no longer be available through Avenza" and suggest searching your app store for a GeoPDF or offline PDF map app instead.
 
 Source page: https://coderalert0.github.io/mapsheet-site/forest-service-mvum-on-your-phone.html
-Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+Checked against its sources on November 20, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
 
 ## What a Motor Vehicle Use Map is
 
@@ -218,7 +223,7 @@ Any app that opens geospatial PDFs (GeoPDF files) will do; the Forest Service do
 > In 2026 Avenza Maps' free plan stopped importing maps you bring yourself, its Plus plan is limited to 20 of your own maps for non-work use, and any work, academic, government or volunteer use needs Pro. Your PDF maps are ordinary files: get them back from where you downloaded them (or export them from Avenza), export your placemarks as KML or GPX if your plan allows, and open both in another geospatial PDF app.
 
 Source page: https://coderalert0.github.io/mapsheet-site/switching-from-avenza-maps.html
-Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+Checked against its sources on November 20, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
 
 ## What changed
 
@@ -557,7 +562,7 @@ In Mapsheet, **+ › From a link or QR code** opens an incident's folder and lis
 
 Source page: https://coderalert0.github.io/mapsheet-site/privacy.html
 
-Effective November 15, 2026.
+Effective November 20, 2026.
 Mapsheet is built so your work stays yours. It has no account and no analytics, and nothing about you is ever sent anywhere.
 
 ## What stays on your device
@@ -577,6 +582,8 @@ Mapsheet goes online only when you ask it to download something:
 - Aerial and topo maps: the app downloads map tiles for the area you choose from the publisher's public tile service (USGS), or asks Mapsheet's server to cut a map of that area (New Zealand imagery from LINZ).
 Like any internet connection, the servers involved see your device's IP address. Mapsheet's server keeps no access logs; it stores nothing about you, only the map areas it's asked to build, for up to 48 hours so the map can be delivered. Publishers' own servers are covered by their own privacy policies. No account, identifier, contact detail or precise position is sent. Scanning a QR code happens on the device.
 Ground heights: when you open the elevation of a line or track, Mapsheet downloads the terrain tiles for that area from the public AWS Terrain Tiles dataset (Amazon). The request names only the tile, not you or your position, and the tiles are kept on your device.
+Place search: when you search for a place to get its maps, what you type goes to Apple's Maps search service (MapKit), which suggests and locates places under Apple's privacy policy. When your position is known, the search is centred on your general area (about 800 km across) so nearby places come first. Mapsheet receives only the place you pick and keeps no record of your searches.
+Support email: "Email support" and "Email it to us" (when a file can't be added) open a message in your mail app with the app version, iOS version and device model, and the map that couldn't be added if you chose that. Nothing is sent unless you send it, and we use it only to answer you.
 Watched folders: when you watch a map folder, Mapsheet checks that folder's listing in the background now and then (when iOS allows) and shows a notification on your device when new maps appear. It reads only the listing from the folder's own site and sends nothing about you.
 Offline mode (Settings) stops all of these: with it on, Mapsheet never uses the internet.
 

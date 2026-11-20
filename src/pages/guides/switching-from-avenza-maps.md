@@ -4,6 +4,7 @@ description: What changed in Avenza Maps' plans in 2026, and how to move your PD
 h1: Avenza Maps changed in 2026. How do I move my maps?
 nav: Switching from Avenza
 answer: In 2026 Avenza Maps' free plan stopped importing maps you bring yourself, its Plus plan is limited to 20 of your own maps for non-work use, and any work, academic, government or volunteer use needs Pro. Your PDF maps are ordinary files: get them back from where you downloaded them (or export them from Avenza), export your placemarks as KML or GPX if your plan allows, and open both in another geospatial PDF app.
+updated: 2026-11-20
 related: what-is-a-geospatial-pdf, forest-service-mvum-on-your-phone, free-topo-maps-as-geospatial-pdf
 ---
 ## What changed

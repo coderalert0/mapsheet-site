@@ -3,7 +3,7 @@
 > In 2026 Avenza Maps' free plan stopped importing maps you bring yourself, its Plus plan is limited to 20 of your own maps for non-work use, and any work, academic, government or volunteer use needs Pro. Your PDF maps are ordinary files: get them back from where you downloaded them (or export them from Avenza), export your placemarks as KML or GPX if your plan allows, and open both in another geospatial PDF app.
 
 Source page: https://coderalert0.github.io/mapsheet-site/switching-from-avenza-maps.html
-Checked against its sources on November 8, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
+Checked against its sources on November 20, 2026. Published by Mapsheet, an offline PDF map app with GPS for iPhone and iPad.
 
 ## What changed
 

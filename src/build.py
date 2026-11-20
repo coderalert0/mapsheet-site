@@ -38,6 +38,7 @@ APP_NAME = "Topo Maps & PDF Maps: Mapsheet"
 TERMS = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
 UPDATED = "2026-11-08"
 UPDATED_LONG = date.fromisoformat(UPDATED).strftime("%B %-d, %Y")
+PRIVACY_UPDATED = "2026-11-20"   # the policy's own effective date (place search, support email)
 DISCLAIMER = ("Mapsheet shows positions from your device's GPS. Check what a map shows against the ground, and don't rely on any "
               "one device for safety. Mapsheet is not affiliated with TerraGo, Esri, the USGS or NRCan; GeoPDF is a registered trademark of TerraGo Technologies.")
 PUBLISHER = {"@type": "Organization", "name": NAME, "url": BASE, "logo": BASE + "img/icon-512.png"}
@@ -49,7 +50,8 @@ SUMMARY = ("Mapsheet is an offline map app for iPhone and iPad that shows your G
            "survey and conservation use it to add points with photos, record tracks, measure areas, go to UTM or MGRS "
            "coordinates and send maps to a whole crew.")
 FACTS = [
-    "Free for up to 3 maps at a time (a multi-page atlas counts as one), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.",
+    "Free for up to 3 maps at a time (a multi-page atlas counts as one; the bundled sample map doesn't count), with every field tool and GPX, KML and CSV export. Work use is allowed on every plan, including the free one.",
+    "Support: Settings › Email support, or \"Email it to us\" when a file can't be added, writes to laddothis@gmail.com; Settings also has Rate Mapsheet and Share Mapsheet.",
     "Mapsheet Field costs $59.99 a year (two weeks free for new subscribers) or $9.99 a month in the US: unlimited maps.",
     "Mapsheet Crew costs $129.99 a year (two weeks free for new subscribers) or $19.99 a month per person in the US (organizations can buy seats through Apple Business Manager): everything in Field plus crew packs (maps, points, tracks and photos sent as one file; the crew opens them free, keeping 3 maps at a time on the free plan or every map with Field), GPS averaging over 30 seconds with the standard error, and shapefile export.",
     "Maps never lock: if a plan ends, the user keeps every map and everything on it and only can't add maps past three.",
@@ -58,7 +60,7 @@ FACTS = [
     "Field tools: GPS position with accuracy and heading in airplane mode; Bluetooth GNSS receivers that provide location to iOS; points with symbols, colours, notes and photos; tracks that keep recording with the screen locked; lines and areas in metric or imperial units with draggable corners; distance and bearing to any point.",
     "Exports GPX, KML, KMZ and CSV (with UTM columns) on every plan, shapefiles on Crew; imports GPX, KML, KMZ, CSV and zipped shapefiles.",
     "Privacy: no account, no server and no analytics. Maps, points, tracks, photos and location stay on the device. App Store privacy label: Data Not Collected.",
-    "Also in the app: adding maps from a link or a QR code (incident teams' map folders on the national fire file share, direct PDF/GeoTIFF links, Avenza-style map lists, link pages), a free map list (USGS US Topo and historical topos, Forest Service FSTopo, NRCan, NSW, Queensland, LINZ Topo50; each map downloads from its publisher), offline aerial and topo map downloads (USGS for the US, LINZ imagery for New Zealand), Crew seats bought by organizations through Apple Business Manager, an offline fire overlay (current perimeters, incidents and NASA satellite hotspots for the US, Canada, Australia and New Zealand, free on every plan, each with its age and source; US fires link to their incident's map folder on the public NIFC File Share), Crew nearby (phones share positions and points over Wi-Fi/Bluetooth with no internet or server; a lead on Crew starts it, anyone joins with a code), exporting a map with your features as a geospatial PDF (Field and Crew), an offline mode that blocks all internet use, a whole-library backup file to move maps to a new device, sending maps as plain files (original PDF plus KML) to people without Mapsheet, and a Settings line showing exactly when a plan renews or a trial turns into a charge, with a reminder two days before. The online features are optional: the core app never needs a connection.",
+    "Also in the app: adding maps from a link or a QR code (incident teams' map folders on the national fire file share, direct PDF/GeoTIFF links, Avenza-style map lists, link pages), a free map list for where you are or any place you search with Apple's place search (USGS US Topo and historical topos, Forest Service FSTopo and motor vehicle use maps, NRCan, NSW, Queensland, LINZ Topo50; each map shows its distance and direction and downloads from its publisher), offline aerial and topo map downloads for an area around you or any place (USGS for the US, LINZ imagery for New Zealand), Crew seats bought by organizations through Apple Business Manager, an offline fire overlay (current perimeters, incidents and NASA satellite hotspots for the US, Canada, Australia and New Zealand, free on every plan, each with its age and source; US fires link to their incident's map folder on the public NIFC File Share), Crew nearby (phones share positions and points over Wi-Fi/Bluetooth with no internet or server; a lead on Crew starts it, anyone joins with a code), exporting a map with your features as a geospatial PDF (Field and Crew), an offline mode that blocks all internet use, a whole-library backup file to move maps to a new device, sending maps as plain files (original PDF plus KML) to people without Mapsheet, and a Settings line showing exactly when a plan renews or a trial turns into a charge, with a reminder two days before. The online features are optional: the core app never needs a connection.",
     "Runs on iPhone and iPad with iOS 17 or later, in English and French (Canada). Launched on the App Store in November 2026. The home page and privacy policy are also in French: " + BASE + "fr/",
 ]
 
@@ -69,6 +71,9 @@ def parse(path):
     meta["slug"] = path.stem
     meta["related"] = [s.strip() for s in meta.get("related", "").split(",") if s.strip()]
     meta["body"] = body.strip()
+    # A guide written or rechecked after the rest carries its own date ("updated: YYYY-MM-DD").
+    meta["updated"] = meta.get("updated", UPDATED)
+    meta["updated_long"] = date.fromisoformat(meta["updated"]).strftime("%B %-d, %Y")
     faq_block = re.search(r"## Frequently asked questions\n(.*?)(?=\n## |\Z)", body, re.S)
     meta["faqs"] = re.findall(r"### (.+?)\n\n(.+?)(?=\n\n###|\Z)", faq_block.group(1).strip(), re.S) if faq_block else []
     source_block = re.search(r"## Sources\n(.*)", body, re.S)
@@ -202,7 +207,7 @@ def guide_page(g, by_slug):
 <nav class="crumbs" aria-label="Breadcrumb"><a href="./">Home</a> <span aria-hidden="true">/</span> <a href="./#guides">Guides</a> <span aria-hidden="true">/</span> <span>{e(g["nav"])}</span></nav>
 <article>
 <h1>{e(g["h1"])}</h1>
-<p class="updated">Checked against its sources on <time datetime="{UPDATED}">{UPDATED_LONG}</time></p>
+<p class="updated">Checked against its sources on <time datetime="{g["updated"]}">{g["updated_long"]}</time></p>
 <div class="answer"><h2>Short answer</h2><p>{e(g["answer"])}</p></div>
 <nav class="toc" aria-label="On this page"><p class="foot-title">On this page</p><ul>{toc}</ul></nav>
 {content}
@@ -217,7 +222,7 @@ def guide_page(g, by_slug):
     crumbs = [("Home", BASE), ("Guides", BASE + "#guides"), (g["nav"], url)]
     schema = [
         {"@context": "https://schema.org", "@type": "Article", "headline": g["h1"], "description": g["description"],
-         "datePublished": UPDATED, "dateModified": UPDATED, "mainEntityOfPage": url, "image": BASE + "img/og.png",
+         "datePublished": g["updated"], "dateModified": g["updated"], "mainEntityOfPage": url, "image": BASE + "img/og.png",
          "author": PUBLISHER, "publisher": PUBLISHER, "inLanguage": "en-US", "citation": [u for _, u in g["sources"]]},
         {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(crumbs)]},
@@ -235,7 +240,7 @@ def guide_markdown(g):
 > {g["answer"]}
 
 Source page: {BASE}{g["slug"]}.html
-Checked against its sources on {UPDATED_LONG}. Published by {NAME}, an offline PDF map app with GPS for iPhone and iPad.
+Checked against its sources on {g["updated_long"]}. Published by {NAME}, an offline PDF map app with GPS for iPhone and iPad.
 
 {body}
 """
@@ -296,7 +301,7 @@ for g in guides:
 cards = "".join(f'<li><a href="{g["slug"]}.html"><strong>{html.escape(g["h1"])}</strong><span>{html.escape(g["description"])}</span></a></li>' for g in guides)
 home = (PAGES / "home.html").read_text().replace("{APP}", html.escape(app_link("web-home"))).replace("{GUIDES}", f'<ul class="guides">{cards}</ul>')
 faqs = re.findall(r"<details><summary>(.+?)</summary><p>(.+?)</p></details>", home)
-SHOTS = ["map", "fires", "freemaps", "crewnearby", "ready"]
+SHOTS = ["map", "places", "fires", "freemaps", "crewnearby", "ready"]
 home_schema = [
     {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": BASE, "description": HOME_DESCRIPTION, "publisher": PUBLISHER, "inLanguage": "en-US"},
     {"@context": "https://schema.org", "@type": "MobileApplication", "name": APP_NAME, "alternateName": NAME, "url": BASE,
@@ -308,7 +313,8 @@ home_schema = [
                      "Distance and bearing to a point", "UTM, MGRS/USNG and lat/lon coordinates",
                      "GPX, KML, KMZ and CSV export and import", "Crew packs (Crew)", "GPS averaging (Crew)", "Shapefile export (Crew)",
                      "Ready for no signal: per-area offline check", "Lock Screen recording with a Stop button", "Siri and Action button shortcuts",
-                     "Elevation profiles of tracks and lines", "Custom fields on points", "UTM grid with MGRS labels"],
+                     "Elevation profiles of tracks and lines", "Custom fields on points", "UTM grid with MGRS labels",
+                     "Free maps and aerial or topo downloads for any place you search"],
      "inLanguage": ["en", "fr-CA"], "publisher": PUBLISHER,
      "offers": [{"@type": "Offer", "name": "Mapsheet (free, 3 maps at a time)", "price": "0", "priceCurrency": "USD"},
                 {"@type": "Offer", "name": "Mapsheet Field, yearly", "price": "59.99", "priceCurrency": "USD"},
@@ -325,7 +331,7 @@ privacy = (PAGES / "privacy.body.html").read_text()
 (ROOT / "privacy.html").write_text(page("privacy", f"Privacy Policy · {NAME}", "Mapsheet has no account, no server and no analytics: your maps, points, tracks, photos and location stay on your device.",
                                         f'<div class="doc">\n{privacy}</div>', current="privacy", schema=[
     {"@context": "https://schema.org", "@type": "WebPage", "name": f"{NAME} privacy policy", "url": f"{BASE}privacy.html",
-     "dateModified": UPDATED, "publisher": PUBLISHER, "inLanguage": "en-US",
+     "dateModified": PRIVACY_UPDATED, "publisher": PUBLISHER, "inLanguage": "en-US",
      "about": {"@type": "MobileApplication", "name": APP_NAME, "url": BASE}}]))
 
 terms = (PAGES / "terms.body.html").read_text()
@@ -352,7 +358,7 @@ privacy_fr = (PAGES / "privacy.body.fr.html").read_text()
                                       "Mapsheet n'a ni compte, ni serveur, ni analyse : vos cartes, points, traces, photos et votre position restent sur l'appareil.",
                                       f'<div class="doc">\n{privacy_fr}</div>', current="privacy", root="../", lang="fr", schema=[
     {"@context": "https://schema.org", "@type": "WebPage", "name": f"Politique de confidentialité de {NAME}", "url": f"{BASE}fr/confidentialite.html",
-     "dateModified": UPDATED, "publisher": PUBLISHER, "inLanguage": "fr-CA", "about": {"@type": "MobileApplication", "name": APP_NAME, "url": BASE}}]))
+     "dateModified": PRIVACY_UPDATED, "publisher": PUBLISHER, "inLanguage": "fr-CA", "about": {"@type": "MobileApplication", "name": APP_NAME, "url": BASE}}]))
 
 terms_fr = (PAGES / "terms.body.fr.html").read_text()
 (FR / "conditions.html").write_text(page("fr/terms", f"Conditions d'utilisation · {NAME}",
@@ -368,7 +374,8 @@ missing = '<div class="doc"><h1>Page not found</h1><p>That page has moved or nev
 # Sitemap
 urls = ([(BASE, "1.0"), (f"{BASE}fr/", "0.9")] + [(f'{BASE}{g["slug"]}.html', "0.8") for g in guides]
         + [(f"{BASE}privacy.html", "0.3"), (f"{BASE}fr/confidentialite.html", "0.3"), (f"{BASE}terms.html", "0.3"), (f"{BASE}fr/conditions.html", "0.3")])
-entries = "".join(f"  <url><loc>{u}</loc><lastmod>{UPDATED}</lastmod><priority>{p}</priority></url>\n" for u, p in urls)
+guide_dates = {f'{BASE}{g["slug"]}.html': g["updated"] for g in guides}
+entries = "".join(f"  <url><loc>{u}</loc><lastmod>{guide_dates.get(u, UPDATED)}</lastmod><priority>{p}</priority></url>\n" for u, p in urls)
 (ROOT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{entries}</urlset>\n')
 # robots.txt only counts at a host's root, so on github.io this copy is a pointer for tools that read it here; the sitemap
 # is submitted to the search engines directly.
