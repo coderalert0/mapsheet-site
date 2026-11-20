@@ -23,6 +23,16 @@ BASE = "https://coderalert0.github.io/mapsheet-site/"
 APP_ID = "6832417568"
 APP = f"https://apps.apple.com/us/app/id{APP_ID}"
 APP_FR = f"https://apps.apple.com/ca/app/id{APP_ID}?l=fr-CA"   # the Canadian store, in French
+PT = "128557981"   # App Store Connect provider token for campaign links (same for every app on the account)
+
+
+def app_link(ct, lang="en"):
+    """App Store link with a campaign token, so installs from each page show in App Store Connect › Acquisition › Campaigns
+    (Apple shows a campaign once it has 5 first-time downloads). Structured data and llms.txt keep the plain APP link."""
+    ct = re.sub(r"[^a-z0-9-]", "", ct.lower().replace("/", "-"))[:30]
+    if lang == "fr":
+        return f"https://apps.apple.com/ca/app/apple-store/id{APP_ID}?pt={PT}&ct={ct}&mt=8&l=fr-CA"
+    return f"https://apps.apple.com/us/app/apple-store/id{APP_ID}?pt={PT}&ct={ct}&mt=8"
 NAME = "Mapsheet"
 APP_NAME = "Topo Maps & PDF Maps: Mapsheet"
 TERMS = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
@@ -114,7 +124,7 @@ def page(slug, title, description, body, *, schema=(), kind="article", current="
     ld = "\n".join(jsonld(item) for item in schema)
     here = lambda name: ' aria-current="page"' if name == current else ""
     home = "./" if lang == "fr" else (root or "./")
-    app = APP_FR if lang == "fr" else APP
+    app = html.escape(app_link("web-" + {"index": "home", "fr/index": "fr-home"}.get(slug, slug), lang))
     privacy_file = "confidentialite.html" if lang == "fr" else "privacy.html"
     terms_file = "conditions.html" if lang == "fr" else "terms.html"
     return f"""<!doctype html>
@@ -198,7 +208,7 @@ def guide_page(g, by_slug):
 {content}
 <aside class="app-cta">
   <div><h2>Your maps, with you on them</h2><p>Mapsheet shows your position on geospatial PDFs and GeoTIFFs with no signal: points, tracks, areas, UTM and MGRS. Free for 3 maps, on iPhone and iPad.</p></div>
-  <a class="badge" href="{APP}"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="150" height="50"></a>
+  <a class="badge" href="{e(app_link('web-' + g['slug']))}"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="150" height="50"></a>
 </aside>
 <section class="sources"><h2>Sources</h2><ul>{sources}</ul><p class="muted">Guides summarize public sources. Check a map and a position against the ground before you rely on them.</p></section>
 <section class="related"><h2>Related guides</h2><ul>{related}</ul></section>
@@ -272,7 +282,8 @@ if art.exists():
 social_card()
 
 guides = [parse(p) for p in sorted((PAGES / "guides").glob("*.md"))]
-order = ["what-is-a-geospatial-pdf", "free-topo-maps-as-geospatial-pdf", "utm-and-mgrs-coordinates-explained", "phone-gps-accuracy-in-the-field"]
+order = ["what-is-a-geospatial-pdf", "forest-service-mvum-on-your-phone", "switching-from-avenza-maps", "free-topo-maps-as-geospatial-pdf",
+         "utm-and-mgrs-coordinates-explained", "phone-gps-accuracy-in-the-field"]
 guides.sort(key=lambda g: order.index(g["slug"]) if g["slug"] in order else len(order))
 by_slug = {g["slug"]: g for g in guides}
 FOOTER_GUIDES = "".join(f'<a href="{g["slug"]}.html">{html.escape(g["nav"])}</a>' for g in guides)
@@ -283,7 +294,7 @@ for g in guides:
 
 # Home
 cards = "".join(f'<li><a href="{g["slug"]}.html"><strong>{html.escape(g["h1"])}</strong><span>{html.escape(g["description"])}</span></a></li>' for g in guides)
-home = (PAGES / "home.html").read_text().replace("{APP}", APP).replace("{GUIDES}", f'<ul class="guides">{cards}</ul>')
+home = (PAGES / "home.html").read_text().replace("{APP}", html.escape(app_link("web-home"))).replace("{GUIDES}", f'<ul class="guides">{cards}</ul>')
 faqs = re.findall(r"<details><summary>(.+?)</summary><p>(.+?)</p></details>", home)
 SHOTS = ["map", "fires", "freemaps", "crewnearby", "ready"]
 home_schema = [
@@ -327,7 +338,7 @@ terms = (PAGES / "terms.body.html").read_text()
 FR = ROOT / "fr"
 FR.mkdir(exist_ok=True)
 cards_fr = "".join(f'<li><a href="../{g["slug"]}.html" hreflang="en"><strong>{html.escape(g["h1"])}</strong><span>{html.escape(g["description"])}</span></a></li>' for g in guides)
-home_fr = (PAGES / "home.fr.html").read_text().replace("{APP}", APP_FR).replace("{GUIDES}", f'<ul class="guides">{cards_fr}</ul>')
+home_fr = (PAGES / "home.fr.html").read_text().replace("{APP}", html.escape(app_link("web-fr-home", "fr"))).replace("{GUIDES}", f'<ul class="guides">{cards_fr}</ul>')
 faqs_fr = re.findall(r"<details><summary>(.+?)</summary><p>(.+?)</p></details>", home_fr)
 HOME_TITLE_FR = "Mapsheet : cartes PDF hors ligne et GPS pour iPhone et iPad"
 HOME_DESCRIPTION_FR = ("Votre position sur des PDF géoréférencés et des GeoTIFF, sans réseau. Points, traces, mesure de surfaces, UTM et MGRS, "
